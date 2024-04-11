@@ -201,12 +201,12 @@
                                     <div>
                                         <a href="#"><i class="fa-solid fa-braille"></i></a>
                                     </div>
-                                    {{-- <div>
+                                    <div>
                                         <a href="/dashboard">DMS Dashboard</a>
                                     </div>
                                     <div>
                                          <a href="/TMS">TMS Dashboard</a> 
-                                    </div> --}}
+                                    </div>
                                     <div>
                                         <a href="/rcms/qms-dashboard">QMS-Dashboard</a>
                                     </div> 
@@ -217,7 +217,7 @@
                                     <a href="/analytics">Analytics</a> 
                                     </div> 
 
-                                    {{-- @if (Auth::user())
+                                    @if (Auth::user())
                                         @if (Helpers::checkRoles(3) || Helpers::checkRoles(1) || Helpers::checkRoles(2))
                                             <div>
                                                 <a href="/mydms">My DMS</a>
@@ -232,18 +232,18 @@
                                             <div>
                                                 <a href="{{ url('mytaskdata') }}">My Tasks</a>
                                             </div>
-                                        @endif --}}
-                                        {{-- @if (Helpers::checkRoles(4) || Helpers::checkRoles(5) || Helpers::checkRoles(3))
+                                        @endif
+                                        @if (Helpers::checkRoles(4) || Helpers::checkRoles(5) || Helpers::checkRoles(3))
                                             <div>
                                                 <a href="{{ route('change-control.index') }}">Change Control</a>
                                             </div>
-                                        @endif --}}
-                                    {{-- @endif --}}
+                                        @endif 
+                                    @endif
 
 
-                                    {{-- <div class="notification">
+                                    <div class="notification">
                                         <a href="/notifications"><i class="fa-solid fa-bell"></i></a>
-                                    </div> --}}
+                                    </div> 
                                     <!-- <div id="create-record-button">
                                         <a href="{{ url('rcms/form-division') }}"> <button class="button_theme1">Create
                                                 Record</button> </a>
