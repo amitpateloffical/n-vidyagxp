@@ -4,6 +4,8 @@
     <div id="tms-head">
         <div class="head">Training Management System</div>
         <div class="link-list">
+            <a href="{{ route('TMS.index') }}" class="tms-link">Employee</a>
+
             <a href="{{ route('TMS.index') }}" class="tms-link">Dashboard</a>
             <div class="tms-drop-block">
                 <div class="drop-btn">Quizzes&nbsp;<i class="fa-solid fa-angle-down"></i></div>
@@ -18,6 +20,10 @@
                 <div class="drop-list">
                     <a href="{{ route('TMS.create') }}">Create Training Plan</a>
                     <a href="{{ url('TMS/show') }}">Manage Training Plan</a>
+                    <a href="{{ url('TMS/show') }}">Trainer Qualification</a>
+
+                    <a href="{{ url('TMS/show') }}">ClassRoom Training</a>
+
                 </div>
             </div>
         </div>
