@@ -4255,6 +4255,7 @@ section#pdf-page .watermark {
 }
 
 #change-control-fields .inner-block {
+    padding: 20px;;
     margin-bottom: 20px;
     box-shadow: 12px 12px 24px #fde0bf, -12px -12px 24px #fae1c4;
     background: #ffffff;

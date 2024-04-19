@@ -267,6 +267,11 @@ Route::view('basic-search', 'frontend.basic-search');
 //! ============================================ //
 Route::view('trainer_qualification', 'frontend.TMS.trainer_qualification');
 Route::view('classroom_training', 'frontend.TMS.classroom_training');
+Route::view('classroom_training_view', 'frontend.TMS.classroom_training_view');
+Route::view('trainer_qualification_view', 'frontend.TMS.trainer_qualification_view');
+
+
+
 Route::view('employee_tms', 'frontend.TMS.employee_tms');
 
 
