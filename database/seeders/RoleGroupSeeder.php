@@ -2957,5 +2957,33 @@ $group->save();
         $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
         $group->save();
 
+        $group = new RoleGroup();
+        $group->id = 438;
+        $group->name = "Corporate-New Document- Initiator";
+        $group->description = "Corporate-New Document- Initiator";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 439;
+        $group->name = "Corporate-New Document- Reviewer";
+        $group->description = "Corporate-New Document- Reviewer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 440;
+        $group->name = "Corporate-New Document- Approver";
+        $group->description = "Corporate-New Document- Approver";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 441;
+        $group->name = "Corporate-New Document- Trainer";
+        $group->description = "Corporate-New Document- Trainer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
 }
 }
