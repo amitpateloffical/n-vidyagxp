@@ -271,6 +271,7 @@ Route::view('basic-search', 'frontend.basic-search');
 Route::get('trainer_qualification', [TrainerQualificationController::class, 'index'])->name('trainer_qualification');
 Route::post('trainer_qualification_store', [TrainerQualificationController::class, 'store'])->name('trainer_qualification_store');
 
+Route::get('trainer_qualification/show/{id}', [TrainerQualificationController::class, 'show']);
 Route::view('classroom_training', 'frontend.TMS.classroom_training');
 Route::view('classroom_training_view', 'frontend.TMS.classroom_training_view');
 Route::view('trainer_qualification_view', 'frontend.TMS.trainer_qualification_view');
