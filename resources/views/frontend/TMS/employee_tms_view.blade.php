@@ -173,6 +173,35 @@
         .calenderauditee input::-webkit-calendar-picker-indicator {
             width: 100%;
         }
+        .progress-bars {
+    display: flex;
+}
+.progress-bars div.active {
+    background: #1fa51f;
+    font-weight: bold;
+}
+
+
+.progress-bars div{
+    flex: 1 1 auto;
+    border: 1px solid grey;
+    padding: 5px;
+    text-align: center;
+    position: relative;
+    border-right: none;
+}
+.progress-bars div:nth-child(1) {
+    border-radius: 20px 0 0 20px;
+}
+.progress-bars div:nth-last-child(1) {
+    border-radius: 0 20px 20px 0;
+}
+.main-head1{
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 20px;
+}
     </style>
     <div class="form-field-head">
 
@@ -194,6 +223,79 @@
     <div id="change-control-fields">
         <div class="container-fluid">
 
+
+            <div class="inner-block state-block">
+                <div class="d-flex justify-content-between align-items-center"> 
+                    <div class="main-head1">Record Workflow </div>
+
+                    <div class="d-flex" style="gap:20px;">
+                       
+                        {{-- <button class="button_theme1" onclick="window.print();return false;"
+                            class="new-doc-btn">Print</button> --}}
+                         <button class="button_theme1"> <a class="text-white" href=""> {{-- add here url for auditTrail i.e. href="{{ url('CapaAuditTrial', $data->id) }}" --}}
+                                Audit Trail </a> </button>
+
+                       
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Submit
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Cancel
+                            </button>
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                                More Info Required
+                            </button> --}}
+                          
+                            
+                              
+                           
+                            
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Approved
+                            </button>
+                        <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
+                            </a> </button>
+
+
+                    </div>
+
+                </div>
+                <div class="status">
+                    <div class="head">Current Status</div>
+                 
+                        {{-- <div class="progress-bars">
+                            <div class="bg-danger">Closed-Cancelled</div>
+                        </div> --}}
+                  
+                        <div class="progress-bars">
+                            
+                            {{-- @if ($data->stage >= 1) --}}
+                            <div class="active">Opened</div>
+                        {{-- @else --}}
+                            {{-- <div class="">Opened</div> --}}
+                        {{-- @endif --}}
+
+                        {{-- @if ($data->stage >= 2) --}}
+                            {{-- <div class="active">Active </div> --}}
+                        {{-- @else --}}
+                            <div class="">Active </div>
+                        {{-- @endif --}}
+
+                      
+
+
+                        {{-- @if ($data->stage >= 3) --}}
+                            {{-- <div class="active">Closed - Completed</div> --}}
+                        {{-- @else --}}
+                            <div class="">Closed - Completed</div>
+                        {{-- @endif --}}
+                     
+
+                </div>
+                {{-- @endif --}}
+                {{-- ---------------------------------------------------------------------------------------- --}}
+            </div>
+        </div>
 
             <!-- Tab links -->
             <div class="cctab">

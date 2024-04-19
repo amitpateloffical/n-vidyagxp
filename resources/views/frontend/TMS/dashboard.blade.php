@@ -30,7 +30,55 @@
                             {{-- <a data-bs-toggle="modal" data-bs-target="#subscribe-modal">Subscribe</a> --}}
                             {{-- <a href="#"><i class="fa-solid fa-caret-down"></i></a> --}}
                         </div>
+
+                        
                     </div>
+                    {{-- <div class="inner-block"> --}}
+                        <div class="block-table">
+                            <table style="margin-top: 15px;" class="table table-bordered">
+                                <thead style="background: #eba645;">
+                                    <tr>
+                                        <th style="width:7%;">Record</th>
+                                        <th>Parent ID</th>
+                                     
+                                        <th>Division</th>
+                                        <th>Process</th>
+                                        <th>Short Discription</th>
+
+                                        <th>Date Opened</th>
+                                        <th>Originator</th>
+
+                                        <th>Due Date</th>
+                                        <th>Status</th>
+
+
+
+
+                                       
+                                     
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                      <tr>
+                                        <td></td>
+                                        <td></td>
+
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        
+
+
+                                      </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    {{-- </div> --}}
                 </div>
 
                 <div class="tms-dashboard-tabs">
@@ -51,6 +99,8 @@
                         <div><i class="fa-solid fa-circle-check"></i>&nbsp;Completed</div>
                     </div> --}}
                 </div>
+
+
 
                 <div class="inner-block tms-block" id="tms-all-block">
                     @if (Helpers::checkRoles(6))

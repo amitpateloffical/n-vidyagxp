@@ -273,6 +273,8 @@ Route::view('trainer_qualification_view', 'frontend.TMS.trainer_qualification_vi
 
 
 Route::view('employee_tms', 'frontend.TMS.employee_tms');
+Route::view('employee_tms_view', 'frontend.TMS.employee_tms_view');
+
 
 
 
