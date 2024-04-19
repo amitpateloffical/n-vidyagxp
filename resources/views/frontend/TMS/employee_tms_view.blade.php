@@ -304,7 +304,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
 
-            <form id="auditform" action="{{ route('createInternalAudit') }}" method="post" enctype="multipart/form-data">
+            <form id="auditform" action="{{ route('employee_tms_update', $data->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
 
@@ -313,10 +313,10 @@
                         <div class="inner-block-content">
                             <div class="row">
                                <div class="sub-head">Basic Details</div>
-                                @if (!empty($parent_id))
+                                {{-- @if (!empty($parent_id))
                                     <input type="hidden" name="parent_id" value="{{ $parent_id }}">
                                     <input type="hidden" name="parent_type" value="{{ $parent_type }}">
-                                @endif
+                                @endif --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
@@ -335,7 +335,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
-                                        <input disabled type="text" value="{{ Auth::user()->name }}">
+                                        <input disabled type="text" name="initiator" id="initiator" value="{{ Auth::user()->name }}">
 
                                     </div>
                                 </div>
@@ -382,21 +382,21 @@
                                     <div class="group-input">
                                         <label for="audit_type">Actual Start Date
                                             </label>
-                                      <input type="date" name="Actual_Start_Date" type="text">
+                                      <input type="date" name="actual_Start_Date" type="text">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="audit_type">Employee ID
                                             </label>
-                                      <input type="number" name="Employee_ID" type="text">
+                                      <input type="number" name="employee_ID" type="text">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="audit_type">Gender
                                             </label>
-                                     <select name="gender" id="">
+                                     <select name="gender" id="gender">
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
@@ -408,7 +408,7 @@
                                     <div class="group-input">
                                         <label for="audit_type">Department Name
                                             </label>
-                                     <select name="department_name" id="">
+                                     <select name="department_name" id="department_name">
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="">1</option>
                                         <option value="">2</option>
@@ -420,7 +420,7 @@
                                     <div class="group-input">
                                         <label for="audit_type">Job Title
                                             </label>
-                                     <select name="job_title" id="">
+                                     <select name="job_title" id="job_title">
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="">1</option>
                                         <option value="">2</option>
@@ -436,11 +436,11 @@
                                                 documents</small></div>
                                         {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="audit_file_attachment"></div>
+                                            <div class="file-attachment-list" id="attached_cv"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="attached_cv[]"
-                                                    oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple>
+                                                    oninput="addMultipleFiles(this, 'attached_cv')" multiple>
                                             </div>
                                         </div>
 
@@ -453,11 +453,11 @@
                                                 documents</small></div>
                                         {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="audit_file_attachment"></div>
+                                            <div class="file-attachment-list" id="certificateClassification"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="attached_cv[]"
-                                                    oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple>
+                                                <input type="file" id="myfile" name="certificateClassification[]"
+                                                    oninput="addMultipleFiles(this, 'certificateClassification')" multiple>
                                             </div>
                                         </div>
 
@@ -486,7 +486,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Product/Material Name">Zone </label>
-                                      <select name="zone" id="">
+                                      <select name="zone" id="zone">
                                             <option value="">Enter Your Selection Here</option>
                                       </select>
                                     </div>
@@ -494,7 +494,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Comments(If Any)">Country</label>
-                                       <select name="country" id="">
+                                       <select name="country" id="country">
                                         <option value="">Enter Your Selection Here </option>
                                        </select>
                                     </div>
@@ -502,7 +502,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Comments(If Any)">City</label>
-                                       <select name="city" id="">
+                                       <select name="city" id="city">
                                         <option value="">
                                             Enter Your Selection Here
                                         </option>
@@ -512,13 +512,13 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="state/district">State/District</label>
-                                       
+                                        <input type="text" name="state_district" id="state_district">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="sitename">Site Name</label>
-                                       <select name="sitename" id="">
+                                       <select name="sitename" id="sitename">
                                         <option value="">
                                             Enter Your Selection Here
                                         </option>
@@ -528,7 +528,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="building">Building</label>
-                                       <select name="building" id="">Enter Your Selection Here
+                                       <select name="building" id="building">Enter Your Selection Here
                                         <option value="">
 
                                         </option>
@@ -538,7 +538,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="floor">Floor</label>
-                                       <select name="floor" id="">
+                                       <select name="floor" id="floor">
                                         <option value="">
                                             Enter Your Selection Here
                                         </option>
@@ -548,7 +548,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="floor">Room</label>
-                                       <select name="floor" id="">
+                                       <select name="room" id="room">
                                         <option value="">
                                             Enter Your Selection Here
                                         </option>
@@ -562,11 +562,11 @@
                                                 documents</small></div>
                                         {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="audit_file_attachment"></div>
+                                            <div class="file-attachment-list" id="picture"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="attached_cv[]"
-                                                    oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple>
+                                                <input type="file" id="myfile" name="picture[]"
+                                                    oninput="addMultipleFiles(this, 'picture')" multiple>
                                             </div>
                                         </div>
 
@@ -575,7 +575,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="floor">Comments</label>
-                                      <textarea name="" id="" cols="30" rows="5"></textarea>
+                                      <textarea name="comment" id="comment" cols="30" rows="5"></textarea>
                                     </div>
                                 </div>
                             </div>

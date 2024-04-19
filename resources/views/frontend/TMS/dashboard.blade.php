@@ -34,47 +34,34 @@
                         
                     </div>
                     {{-- <div class="inner-block"> --}}
+                        {{-- @php
+                        dd($employeeData);
+                        @endphp --}}
                         <div class="block-table">
                             <table style="margin-top: 15px;" class="table table-bordered">
                                 <thead style="background: #eba645;">
                                     <tr>
                                         <th style="width:7%;">Record</th>
-                                        <th>Parent ID</th>
-                                     
                                         <th>Division</th>
-                                        <th>Process</th>
-                                        <th>Short Discription</th>
-
-                                        <th>Date Opened</th>
+                                        <th>Date Opened</th>{{--  //Initaion Date --}}
                                         <th>Originator</th>
-
                                         <th>Due Date</th>
                                         <th>Status</th>
-
-
-
-
-                                       
-                                     
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
-                                      <tr>
-                                        <td></td>
-                                        <td></td>
+                                    @foreach($employeeData as $employee)
+                                    <tr>
+                                        <td>{{ $employee['record_number'] }}</td>
+                                        <td>{{ $employee['division_id'] }}</td>
+                                        <td>{{ $employee['intiation_date'] }}</td>
+                                        <td>{{ $employee['initiator'] }}</td>
+                                        <td>{{ $employee['due_date'] }}</td>
 
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        
-
-
-                                      </tr>
+                                        <td>{{ $employee['status'] }}</td>
+                                         {{-- Assuming there's a 'status' key in $employeeData --}}
+                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
