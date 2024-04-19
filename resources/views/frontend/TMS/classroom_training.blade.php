@@ -242,7 +242,7 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / ClassRoom Qualification
+            {{ Helpers::getDivisionName(session()->get('division')) }} / Classroom Qualification
         </div>
     </div>
 
@@ -486,7 +486,7 @@
                                                         <th>Responsible Person</th>
                                                         <th>Supporting Documents</th>
 
-                                                        <th>status</th>
+                                                        <th>Status</th>
                                                       
                                                         <th>Remarks</th>
                                                        
@@ -603,7 +603,7 @@
 
                                     <div class="group-input">
                                         <label for="audit-agenda-grid">
-                                         surveys
+                                         Surveys
                                             <button type="button" name="audit-agenda-grid"
                                                 id="surveys_Information">+</button>
                                         </label>

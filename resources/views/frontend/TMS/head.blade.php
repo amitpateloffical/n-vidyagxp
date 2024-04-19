@@ -22,7 +22,7 @@
                     <a href="{{ url('TMS/show') }}">Manage Training Plan</a>
                     <a href="/trainer_qualification">Trainer Qualification</a>
 
-                    <a href="classroom_training">ClassRoom Training</a>
+                    <a href="classroom_training">Classroom Training</a>
 
                 </div>
             </div>
