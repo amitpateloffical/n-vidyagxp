@@ -31,6 +31,8 @@ use App\Http\Controllers\rcms\RcmsDashboardController;
 use App\Http\Controllers\tms\QuestionBankController;
 use App\Http\Controllers\tms\QuestionController;
 use App\Http\Controllers\tms\QuizeController;
+use App\Http\Controllers\tms\TrainerQualificationController;
+
 use App\Http\Controllers\rcms\DeviationController;
 use App\Imports\DocumentsImport;
 use Illuminate\Support\Facades\Route;
@@ -265,7 +267,10 @@ Route::view('basic-search', 'frontend.basic-search');
 //! ============================================ //
 //!                    TMS
 //! ============================================ //
-Route::view('trainer_qualification', 'frontend.TMS.trainer_qualification');
+//Route::view('trainer_qualification', 'frontend.TMS.trainer_qualification');
+Route::get('trainer_qualification', [TrainerQualificationController::class, 'index'])->name('trainer_qualification');
+Route::post('trainer_qualification_store', [TrainerQualificationController::class, 'store'])->name('trainer_qualification_store');
+
 Route::view('classroom_training', 'frontend.TMS.classroom_training');
 Route::view('classroom_training_view', 'frontend.TMS.classroom_training_view');
 Route::view('trainer_qualification_view', 'frontend.TMS.trainer_qualification_view');

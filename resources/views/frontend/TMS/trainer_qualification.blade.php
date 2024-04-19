@@ -256,7 +256,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
 
-            <form id="auditform" action="{{ route('createInternalAudit') }}" method="post" enctype="multipart/form-data">
+            <form id="auditform" action="{{ route('trainer_qualification_store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
 
@@ -287,7 +287,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
-                                        <input disabled type="text" value="{{ Auth::user()->name }}">
+                                        <input disabled type="text"  value="{{ Auth::user()->name }}">
 
                                     </div>
                                 </div>
@@ -324,7 +324,7 @@
                                     <div class="group-input input-date">
                                         <label for="Date Due">Due Date</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly
+                                            <input type="text"  name= "due_date" id="due_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
@@ -404,7 +404,7 @@
                                     <div class="group-input">
                                         <label for="priority-level">Priority Level</label>
                                         <span class="text-primary">Priority levels in TMS can be tailored to suit the specific needs of the institution in managing the training program.</span>
-                                        <select name="severity_level_form">
+                                        <select name="priority_level">
                                             <option value="0">-- Select --</option>
                                             <option value="low">Low Priority</option>
                                             <option value="medium">Medium Priority</option>
