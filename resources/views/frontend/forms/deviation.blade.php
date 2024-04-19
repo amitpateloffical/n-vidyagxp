@@ -61,11 +61,13 @@
                 <div class="inner-block-content">
                     <div class="row">
                         <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="RLS Record Number">Record Number </label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
+                                    <div class="group-input">
+                                        <label for="RLS Record Number"><b>Record Number</b></label>
+                                        <input disabled type="text" name="record_number"
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/DEV/{{ date('Y') }}/{{ $record_number }}">
+                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                    </div>
+                                </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Division Code"> Division Code </label>
@@ -85,10 +87,11 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Date Due"> Date of Initiation </label>
-                                <input type="date" name="Date Due">
-                            </div>
+                                    <div class="group-input ">
+                                        <label for="Date Due"><b>Date of Initiation</b></label>
+                                        <input readonly type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                    </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
