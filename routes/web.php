@@ -65,8 +65,8 @@ Route::view('rcms_check', 'frontend.rcms.makePassword');
 
 Route::get('/', [UserLoginController::class, 'userlogin']);
 Route::view('forgot-password', 'frontend.forgot-password');
-Route::get('reset-password/{token}', [UserLoginController::class,'resetPage']);
-Route::post('reset-password', [UserLoginController::class,'UpdateNewPassword']);
+Route::get('reset-password/{token}', [UserLoginController::class, 'resetPage']);
+Route::post('reset-password', [UserLoginController::class, 'UpdateNewPassword']);
 Route::get('forgetPassword-user', [UserLoginController::class, 'forgetPassword']);
 
 // Route::view('dashboard', 'frontend.dashboard');
@@ -90,9 +90,9 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     //Route::post('set/division', [DocumentController::class, 'division'])->name('division_submit');
     Route::post('dcrDivision', [DocumentController::class, 'dcrDivision'])->name('dcrDivision_submit');
     Route::get('documents/generatePdf/{id}', [DocumentController::class, 'createPDF']);
-    
+
     Route::get('documents/reviseCreate/{id}', [DocumentController::class, 'revise_create']);
-    
+
     Route::get('documents/printPDF/{id}', [DocumentController::class, 'printPDF']);
     Route::get('documents/viewpdf/{id}', [DocumentController::class, 'viewPdf']);
     Route::resource('documentsContent', DocumentContentController::class);
@@ -183,7 +183,7 @@ Route::post('reject_Risk/{id}', [RiskManagementController::class, 'RejectStateCh
 
 Route::get('riskAuditTrial/{id}', [RiskManagementController::class, 'riskAuditTrial']);
 Route::get('auditDetailsrisk/{id}', [RiskManagementController::class, 'auditDetailsrisk'])->name('showriskAuditDetails');
-Route::post('child/{id}',[RiskManagementController::class,'child'])->name('riskAssesmentChild');
+Route::post('child/{id}', [RiskManagementController::class, 'child'])->name('riskAssesmentChild');
 
 
 
@@ -270,7 +270,8 @@ Route::view('basic-search', 'frontend.basic-search');
 //Route::view('trainer_qualification', 'frontend.TMS.trainer_qualification');
 Route::get('trainer_qualification', [TrainerQualificationController::class, 'index'])->name('trainer_qualification');
 Route::post('trainer_qualification_store', [TrainerQualificationController::class, 'store'])->name('trainer_qualification_store');
-
+Route::post('trainer_qualification_update/{id}', [TrainerQualificationController::class, 'update'])->name('trainer_qualification_update');
+ROute::get('show/{id}', [TrainerQualificationController::class, 'show'])->name('show');
 Route::view('classroom_training', 'frontend.TMS.classroom_training');
 Route::view('classroom_training_view', 'frontend.TMS.classroom_training_view');
 Route::view('trainer_qualification_view', 'frontend.TMS.trainer_qualification_view');
@@ -315,14 +316,14 @@ Route::view('audit-pdf', 'frontend.documents.audit-pdf');
 //! ============================================
 //!                    RCMS
 //! ============================================
-Route::get('chart-data',[DesktopController::class, 'fetchChartData']);
-Route::get('chart-data-releted',[DesktopController::class, 'fetchChartDataDepartmentReleted']);
-Route::get('chart-data-initialDeviationCategory',[DesktopController::class, 'fetchChartDataInitialDeviationCategory']);
-Route::get('chart-data-postCategorizationOfDeviation',[DesktopController::class, 'fetchChartDataPostCategorizationOfDeviation']);
-Route::get('chart-data-capa',[DesktopController::class, 'fetchChartDataCapa']);
+Route::get('chart-data', [DesktopController::class, 'fetchChartData']);
+Route::get('chart-data-releted', [DesktopController::class, 'fetchChartDataDepartmentReleted']);
+Route::get('chart-data-initialDeviationCategory', [DesktopController::class, 'fetchChartDataInitialDeviationCategory']);
+Route::get('chart-data-postCategorizationOfDeviation', [DesktopController::class, 'fetchChartDataPostCategorizationOfDeviation']);
+Route::get('chart-data-capa', [DesktopController::class, 'fetchChartDataCapa']);
 
-Route::get('chart-data-dep',[DesktopController::class, 'fetchChartDataDepartment']);
-Route::get('chart-data-statuswise',[DesktopController::class, 'fatchStatuswise']);
+Route::get('chart-data-dep', [DesktopController::class, 'fetchChartDataDepartment']);
+Route::get('chart-data-statuswise', [DesktopController::class, 'fatchStatuswise']);
 
 Route::view('rcms_login', 'frontend.rcms.login');
 
@@ -445,5 +446,3 @@ Route::get('send-notification-before-one-due-date', [CronNotification::class, 's
 //! ============================================
 //!                    External Audit
 //! ============================================
-
-
