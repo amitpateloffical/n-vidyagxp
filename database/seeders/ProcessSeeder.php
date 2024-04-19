@@ -88,6 +88,16 @@ class ProcessSeeder extends Seeder
                 $process->process_name = $processName;
                 $process->save();
             }
+
+            if($processName == "New Document"){
+                for ($divisionId = 14; $divisionId <= 27; $divisionId++) {
+                    $process = new QMSProcess();
+                    $process->division_id = $divisionId;
+                    $process->process_name = $processName;
+                    $process->save();
+                }
+            }
         }
     }
 }
+
