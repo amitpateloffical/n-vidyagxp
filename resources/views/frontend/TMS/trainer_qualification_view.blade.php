@@ -382,6 +382,10 @@
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                     </div>
                                 </div>
+
+
+
+                                
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>

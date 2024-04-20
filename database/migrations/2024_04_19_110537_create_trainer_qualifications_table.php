@@ -39,6 +39,10 @@ return new class extends Migration
             $table->text('trainingQualificationStatus')->nullable();
             $table->string('Q_comment')->nullable();
             $table->longtext('inv_attachment')->nullable();
+            $table->longtext('stage')->nullable();
+            $table->longtext('status')->nullable();
+            $table->longtext('submit_by')->nullable();
+            $table->longtext('submit_on')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

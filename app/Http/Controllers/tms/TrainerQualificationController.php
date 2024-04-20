@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\TrainerQualification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
+
 
 class TrainerQualificationController extends Controller
 {
@@ -17,10 +20,17 @@ class TrainerQualificationController extends Controller
 
     public function store(Request $request)
     {
-        // if (!$request->short_description) {
-        //     toastr()->error("Short description is required");
-        //     return response()->redirect()->back()->withInput();
-        // }
+
+        $validator = Validator::make($request->all(), [
+            'short_description' => 'required|string|max:255',
+        ]);
+        
+  
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+
 
         $Trainer = new TrainerQualification();
        
@@ -30,7 +40,7 @@ class TrainerQualificationController extends Controller
         $Trainer->Initiator_id= Auth::user()->id;
         $Trainer->intiation_date=$request->intiation_date;
         $Trainer->assign_to=$request->assign_to;
-        $Trainer->due_date=$request->record_number;
+        $Trainer->due_date=$request->due_date;
         $Trainer->short_description=$request->short_description;
         $Trainer->trainer_name=$request->trainer_name;
         $Trainer->qualification=$request->qualification;
@@ -68,6 +78,7 @@ class TrainerQualificationController extends Controller
             $Trainer->inv_attachment = json_encode($files);
         }
         $Trainer->Save();       
+     return redirect()->route('TMS.index')->with('success', 'Data successfully stored!');
 
     }
 
@@ -126,6 +137,7 @@ class TrainerQualificationController extends Controller
             $Trainer->inv_attachment = json_encode($files);
         }
         $Trainer->update();       
+        return redirect()->with('success', 'Data successfully stored!');
 
 
 

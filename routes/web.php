@@ -275,7 +275,7 @@ Route::get('trainer_qualification_view/{id}', [TrainerQualificationController::c
 Route::post('trainer_qualification_update/{id}', [TrainerQualificationController::class, 'update'])->name('trainer_qualification_update');
           
 Route::view('classroom_training', 'frontend.TMS.classroom_training');
-Route::view('classroom_training_view', 'frontend.TMS.classroom_training_view');
+//Route::view('classroom_training_view', 'frontend.TMS.classroom_training_view');
 //Route::view('trainer_qualification_view', 'frontend.TMS.trainer_qualification_view');
 
 

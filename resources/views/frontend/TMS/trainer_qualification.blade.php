@@ -519,8 +519,7 @@
                                  <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Q_comment">Qualification Comments</label>
-                                       <textarea class="summernote" name="Q_comment" id="summernote-1">
-                                    </textarea>
+                                       <textarea class="" name="Q_comment"></textarea>
                                     </div>
                                 </div>
 
