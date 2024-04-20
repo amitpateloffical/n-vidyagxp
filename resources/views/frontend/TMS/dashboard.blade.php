@@ -52,7 +52,13 @@
                                 <tbody>
                                     @foreach($employeeData as $employee)
                                     <tr>
-                                        <td>{{ $employee['record_number'] }}</td>
+                                        <td>
+                                            <a 
+                                            href="{{ route('employeeShow', $employee['id']) }}" style="color: blue">
+                                                {{ str_pad($employee['id'], 4, '0', STR_PAD_LEFT) }}
+                                            </a>
+                                          
+                                        </td>
                                         <td>{{ $employee['division_id'] }}</td>
                                         <td>{{ $employee['intiation_date'] }}</td>
                                         <td>{{ $employee['initiator'] }}</td>

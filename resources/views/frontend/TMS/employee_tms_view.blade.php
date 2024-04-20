@@ -227,73 +227,51 @@
             <div class="inner-block state-block">
                 <div class="d-flex justify-content-between align-items-center"> 
                     <div class="main-head1">Record Workflow </div>
-
+                    @php
+                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
+                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                    @endphp
                     <div class="d-flex" style="gap:20px;">
-                       
-                        {{-- <button class="button_theme1" onclick="window.print();return false;"
-                            class="new-doc-btn">Print</button> --}}
-                         <button class="button_theme1"> <a class="text-white" href=""> {{-- add here url for auditTrail i.e. href="{{ url('CapaAuditTrial', $data->id) }}" --}}
-                                Audit Trail </a> </button>
-
-                       
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Submit
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                Cancel
-                            </button>
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                                More Info Required
-                            </button> --}}
-                          
-                            
-                              
-                           
-                            
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Approved
-                            </button>
-                        <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
-                            </a> </button>
-
-
+                        @if(in_array(43, $userRoleIds))  
+                            @if ($data->stage == 1)                   
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                    Activate
+                                </button>
+                            @elseif($data->stage == 2)
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                    Retire
+                                </button>
+                                <button class="button_theme1"> 
+                                    <a class="text-white" href="{{ url('TMS') }}"> Exit </a> 
+                                </button>
+                            @endif
+                        @endif      
                     </div>
 
                 </div>
                 <div class="status">
                     <div class="head">Current Status</div>
-                 
-                        {{-- <div class="progress-bars">
-                            <div class="bg-danger">Closed-Cancelled</div>
-                        </div> --}}
-                  
                         <div class="progress-bars">
                             
-                            {{-- @if ($data->stage >= 1) --}}
+                            @if ($data->stage >= 1)
                             <div class="active">Opened</div>
-                        {{-- @else --}}
-                            {{-- <div class="">Opened</div> --}}
-                        {{-- @endif --}}
+                        @else
+                            <div class="">Opened</div>
+                        @endif
 
-                        {{-- @if ($data->stage >= 2) --}}
-                            {{-- <div class="active">Active </div> --}}
-                        {{-- @else --}}
+                        @if ($data->stage >= 2)
+                            <div class="active">Active </div>
+                        @else
                             <div class="">Active </div>
-                        {{-- @endif --}}
-
-                      
-
-
-                        {{-- @if ($data->stage >= 3) --}}
-                            {{-- <div class="active">Closed - Completed</div> --}}
-                        {{-- @else --}}
-                            <div class="">Closed - Completed</div>
-                        {{-- @endif --}}
+                        @endif
+                        @if ($data->stage >= 3)
+                            <div class="active">Closed - Retired</div>
+                        @else
+                            <div class="">Closed - Retired</div>
+                        @endif
                      
 
                 </div>
-                {{-- @endif --}}
-                {{-- ---------------------------------------------------------------------------------------- --}}
             </div>
         </div>
 
@@ -320,22 +298,22 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number"
-                                            value="">
+                                        <input readonly type="text" name="record_number"
+                                        value="{{ Helpers::getDivisionName($data->division_id) }}/CAPA/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code </b></label>
                                         <input readonly type="text" name="division_code"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        value="{{ Helpers::getDivisionName($data->division_id) }}">
+                                        {{-- <input type="hidden" name="division_id" value="{{ session()->get('division') }}"> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
-                                        <input disabled type="text" name="initiator" id="initiator" value="{{ Auth::user()->name }}">
+                                        <input readonly type="text" name="initiator" id="initiator" value="{{ $data->initiator_name }}">
 
                                     </div>
                                 </div>
