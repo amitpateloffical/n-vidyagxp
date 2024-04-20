@@ -71,14 +71,67 @@ class TrainerQualificationController extends Controller
     }
 
 
+    public function show($id)
+    {
+        $trainerQualifications = TrainerQualification::find($id);
+        return view('frontend.TMS.trainer_qualification_view', compact('trainerQualifications'));
+    }
+
+    public  function update(Request $request, $id)
+    {
+        // dd($request->all());
+        $Trainer = TrainerQualification::find($id);
+        if ($Trainer) {
+            $Trainer->record_number = $request->record_number;
+            $Trainer->division_code = $request->division_code;
+            $Trainer->Initiator_id = $request->Initiator_id;
+            $Trainer->intiation_date = $request->intiation_date;
+            if ($request->assign_to) {
+                $Trainer->assign_to = $request->assign_to;
+            }
+            if ($request->due_date) {
+                $Trainer->due_date = $request->due_date;
+            }
+            $Trainer->short_description = $request->short_description;
+            $Trainer->trainer_name = $request->trainer_name;
+            $Trainer->qualification = $request->qualification;
+            $Trainer->designation = $request->designation;
+            $Trainer->department = $request->department;
+            $Trainer->Experience = $request->Experience;
+            $Trainer->priority_level = $request->priority_level;
+            $Trainer->initiated_through = $request->initiated_through;
+            $Trainer->initiated_if_other = $request->initiated_if_other;
+            $Trainer->external_agencies = $request->external_agencies;
+            $Trainer->trainer_skill_set = is_array($request->trainer_skill_set) ? implode(',', $request->trainer_skill_set) : $request->trainer_skill_set;
+
+            $Trainer->serial_number = is_array($request->serial_number) ? implode(',', $request->serial_number) : $request->serial_number;
+
+            $Trainer->title_of_document = is_array($request->title_of_document) ? implode(',', $request->title_of_document) : $request->title_of_document;
+
+            $Trainer->supporting_document = is_array($request->supporting_document) ? implode(',', $request->supporting_document) : $request->supporting_document;
+
+            $Trainer->remarks = is_array($request->remarks) ? implode(',', $request->remarks) : $request->remarks;
+            $Trainer->trainingQualificationStatus = is_array($request->trainingQualificationStatus) ? implode(',', $request->trainingQualificationStatus) : $request->trainingQualificationStatus;
+            $Trainer->Q_comment = $request->Q_comment;
+            $Trainer->inv_attachment = $request->inv_attachment;
+
+            if (!empty($request->inv_attachment)) {
+                $files = [];
+                if ($request->hasfile('inv_attachment')) {
+                    foreach ($request->file('inv_attachment') as $file) {
+                        $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
 
 
-    // public function show($id)
-    // {
+                $Trainer->inv_attachment = json_encode($files);
+            }
 
-    // $data  =  TrainerQualification::find($id);
-    // //dd($data);
-    // return view('frontend.TMS.trainer_qualification_view',compact('data'));
-    // }
-
+            $Trainer->update();
+            return redirect()->back()->with('success', 'Trainer qualification updated successfully.');
+        } else {
+        }
+    }
 }

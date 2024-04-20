@@ -361,7 +361,7 @@ $users = DB::table('users')
             <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
         </div>
 
-        <form id="auditform" action="{{ route('trainer_qualification_update') }}" method="post" enctype="multipart/form-data">
+        <form id="auditform" action="{{ route('trainer_qualification_update',$trainerQualifications->id) }}" method="post" enctype="multipart/form-data">
             @csrf
             <div id="step-form">
 
@@ -391,7 +391,6 @@ $users = DB::table('users')
                                 <div class="group-input">
                                     <label for="Initiator"><b>Initiator</b></label>
                                     <input disabled type="text" value="{{ Auth::user()->name }}">
-
                                 </div>
                             </div>
 
@@ -427,7 +426,7 @@ $users = DB::table('users')
                                 <div class="group-input input-date">
                                     <label for="Date Due">Due Date</label>
                                     <div class="calenderauditee">
-                                        <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($trainerQualifications->due_date) }}" />
                                         <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')" />
                                     </div>
                                 </div>
@@ -438,7 +437,7 @@ $users = DB::table('users')
                                 <div class="group-input">
                                     <label for="Short Description">Short Description</label><span id="rchars">255</span>
                                     characters remaining
-                                    <input id="short_description" type="text" name="short_description" maxlength="255">
+                                    <input id="short_description" type="text" value="{{$trainerQualifications->short_description}}" name="short_description" maxlength="255">
                                 </div>
                             </div>
 
@@ -449,8 +448,8 @@ $users = DB::table('users')
                                 <div class="group-input">
                                     <label for="trainer">Trainer Name</label>
                                     <select name="trainer_name" id="trainer_name">
-                                        <option value="0">Select</option>
-                                        <option value="trainer1">Trainer 1</option>
+                                        <option value="">Select</option>
+                                        <option value="trainer1" @if ($trainerQualifications->trainer_name == 'trainer1') selected @endif>Trainer 1</option>
                                     </select>
                                 </div>
                             </div>
@@ -458,7 +457,7 @@ $users = DB::table('users')
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="qualification">Qualification</label>
-                                    <input id="qualification" type="text" name="qualification" maxlength="255">
+                                    <input id="qualification" type="text" name="qualification" value="{{$trainerQualifications->qualification}}" maxlength="255">
                                 </div>
                             </div>
 
@@ -466,11 +465,11 @@ $users = DB::table('users')
                                 <div class="group-input">
                                     <label for="Designation">Designation</label>
                                     <select name="designation" id="designation">
-                                        <option value="0">Select</option>
-                                        <option value="lead_trainer">Lead Trainer</option>
-                                        <option value="senior_trainer">Senior Trainer</option>
-                                        <option value="Instructor">Instructor</option>
-                                        <option value="Evaluator">Evaluator</option>
+                                        <option value="">Select</option>
+                                        <option value="Lead Trainer" @if ($trainerQualifications->designation == 'Lead Trainer') selected @endif>Lead Trainer</option>
+                                        <option value="Senior Trainer" @if ($trainerQualifications->designation == 'Senior Trainer') selected @endif>Senior Trainer</option>
+                                        <option value="Instructor" @if ($trainerQualifications->designation == 'Instructor') selected @endif>Instructor</option>
+                                        <option value="Evaluator" @if ($trainerQualifications->designation == 'Evaluator') selected @endif>Evaluator</option>
                                     </select>
                                 </div>
                             </div>
@@ -479,12 +478,12 @@ $users = DB::table('users')
                                 <div class="group-input">
                                     <label for="Department">Department</label>
                                     <select name="department" id="department">
-                                        <option value="0">Select</option>
-                                        <option value="quality_assurance">Quality Assurance (QA)</option>
-                                        <option value="operations">Operations</option>
-                                        <option value="learning_deve">Learning and Development (L&D)</option>
-                                        <option value="it">Information Technology (IT)</option>
-                                        <option value="Finance">Finance</option>
+                                        <option value="">Select</option>
+                                        <option value="quality_assurance" @if ($trainerQualifications->department == 'quality_assurance') selected @endif>Quality Assurance (QA)</option>
+                                        <option value="operations" @if ($trainerQualifications->department == 'operations') selected @endif>Operations</option>
+                                        <option value="learning_deve" @if ($trainerQualifications->department == 'learning_deve') selected @endif>Learning and Development (L&D)</option>
+                                        <option value="Information Technology (IT)" @if ($trainerQualifications->department == 'Information Technology (IT)') selected @endif>Information Technology (IT)</option>
+                                        <option value="Finance" @if ($trainerQualifications->department == 'Finance') selected @endif>Finance</option>
                                     </select>
                                 </div>
                             </div>
@@ -494,7 +493,7 @@ $users = DB::table('users')
                                     <label for="Experience">Experience (No. of Years)</label>
                                     <select name="Experience" id="Experience">
                                         <option value="">Select </option>
-                                        @for ($i = 1; $i <= 70; $i++) <option value="{{ $i }}">{{ $i }}</option>
+                                        @for ($i = 1; $i <= 70; $i++) <option value="{{ $i }}" @if($trainerQualifications->Experience == $i) selected @endif>{{ $i }}</option>
                                             @endfor
                                     </select>
                                 </div>
@@ -504,11 +503,11 @@ $users = DB::table('users')
                                 <div class="group-input">
                                     <label for="priority-level">Priority Level</label>
                                     <span class="text-primary">Priority levels in TMS can be tailored to suit the specific needs of the institution in managing the training program.</span>
-                                    <select name="severity_level_form">
-                                        <option value="0">-- Select --</option>
-                                        <option value="low">Low Priority</option>
-                                        <option value="medium">Medium Priority</option>
-                                        <option value="high">High Priority</option>
+                                    <select name="priority_level" id="priority_level">
+                                        <option value="">-- Select --</option>
+                                        <option value="low" @if ($trainerQualifications->priority_level == 'low') selected @endif>Low Priority</option>
+                                        <option value="medium" @if ($trainerQualifications->priority_level == 'medium') selected @endif>Medium Priority</option>
+                                        <option value="high" @if ($trainerQualifications->priority_level == 'high') selected @endif>High Priority</option>
                                     </select>
                                 </div>
                             </div>
@@ -523,21 +522,21 @@ $users = DB::table('users')
                                     <div><small class="text-primary">Please select related information</small></div>
                                     <select name="initiated_through" onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                         <option value="">-- select --</option>
-                                        <option value="recall">Recall</option>
-                                        <option value="return">Return</option>
-                                        <option value="deviation">Deviation</option>
-                                        <option value="complaint">Complaint</option>
-                                        <option value="regulatory">Regulatory</option>
-                                        <option value="lab-incident">Lab Incident</option>
-                                        <option value="improvement">Improvement</option>
-                                        <option value="others">Others</option>
+                                        <option value="Recall" @if ($trainerQualifications->initiated_through == 'Recall') selected @endif>Recall</option>
+                                        <option value="Return" @if ($trainerQualifications->initiated_through == 'Return') selected @endif>Return</option>
+                                        <option value="Deviation" @if ($trainerQualifications->initiated_through == 'Deviation') selected @endif>Deviation</option>
+                                        <option value="Complaint" @if ($trainerQualifications->initiated_through == 'Complaint') selected @endif>Complaint</option>
+                                        <option value="Regulatory" @if ($trainerQualifications->initiated_through == 'Regulatory') selected @endif>Regulatory</option>
+                                        <option value="Lab Incident" @if ($trainerQualifications->initiated_through == 'Lab Incident') selected @endif>Lab Incident</option>
+                                        <option value="improvement" @if ($trainerQualifications->initiated_through == 'improvement') selected @endif>Improvement</option>
+                                        <option value="Others" @if ($trainerQualifications->initiated_through == 'Others') selected @endif>Others</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input" id="initiated_through_req">
                                     <label for="If Other">Others<span class="text-danger d-none">*</span></label>
-                                    <textarea name="initiated_if_other"></textarea>
+                                    <textarea name="initiated_if_other">{{$trainerQualifications->initiated_if_other}}</textarea>
                                 </div>
                             </div>
 
@@ -545,17 +544,17 @@ $users = DB::table('users')
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="external_agencies">External Agencies</label>
-                                    <select name="external_agencies" onchange="otherController(this.value, 'others', 'external_agencies_req')">
+                                    <select name="external_agencies" id="external_agencies" onchange="otherController(this.value, 'others', 'external_agencies_req')">
                                         <option value="">-- Select --</option>
-                                        <option value="jordan_fda">Jordan FDA</option>
-                                        <option value="us_fda">USFDA</option>
-                                        <option value="mhra">MHRA</option>
-                                        <option value="anvisa">ANVISA</option>
-                                        <option value="iso">ISO</option>
-                                        <option value="who">WHO</option>
-                                        <option value="local_fda">Local FDA</option>
-                                        <option value="tga">TGA</option>
-                                        <option value="others">Others</option>
+                                        <option value="Jordan FDA" @if ($trainerQualifications->external_agencies == 'Jordan FDA')selected @endif>Jordan FDA</option>
+                                        <option value="USFDA" @if ($trainerQualifications->external_agencies == 'USFDA')selected @endif>USFDA</option>
+                                        <option value="MHRA" @if ($trainerQualifications->external_agencies == 'MHRA')selected @endif>MHRA</option>
+                                        <option value="ANVISA" @if ($trainerQualifications->external_agencies == 'Others')selected @endif>ANVISA</option>
+                                        <option value="ISO" @if ($trainerQualifications->external_agencies == 'ISO')selected @endif>ISO</option>
+                                        <option value="WHO" @if ($trainerQualifications->external_agencies == 'WHO')selected @endif>WHO</option>
+                                        <option value="Local FDA" @if ($trainerQualifications->external_agencies == 'Local FDA')selected @endif>Local FDA</option>
+                                        <option value="TGA" @if ($trainerQualifications->external_agencies == 'TGA')selected @endif>TGA</option>
+                                        <option value="others" @if ($trainerQualifications->external_agencies == 'Others')selected @endif>Others</option>
                                     </select>
                                 </div>
                             </div>
@@ -565,12 +564,12 @@ $users = DB::table('users')
                                     <label for="trainer_skill_set">Trainer Skill Set</label>
                                     <select multiple name="trainer_skill_set[]" id="trainerSkillSet">
                                         <option value="">-- Select --</option>
-                                        <option value="Production">Production</option>
-                                        <option value="QC">QC</option>
-                                        <option value="QA">QA</option>
-                                        <option value="RA">RA</option>
-                                        <option value="Warehouse">Warehouse</option>
-                                        <option value="IT">IT</option>
+                                        <option value="Production" @if ($trainerQualifications->trainer_skill_set == 'Production')selected @endif>Production</option>
+                                        <option value="QC" @if ($trainerQualifications->trainer_skill_set == 'QC')selected @endif>QC</option>
+                                        <option value="QA" @if ($trainerQualifications->trainer_skill_set == 'QA')selected @endif>QA</option>
+                                        <option value="RA" @if ($trainerQualifications->trainer_skill_set == 'RA')selected @endif>RA</option>
+                                        <option value="Warehouse" @if ($trainerQualifications->trainer_skill_set == 'Warehouse')selected @endif>Warehouse</option>
+                                        <option value="IT" @if ($trainerQualifications->trainer_skill_set == 'IT')selected @endif>IT</option>
                                     </select>
                                 </div>
                             </div>
@@ -592,10 +591,10 @@ $users = DB::table('users')
                                     <tbody>
                                         <td><input disabled type="text" name="serial_number[]" value="1">
                                         </td>
-                                        <td><input type="text" name="title_of document[]"></td>
-                                        <td><input type="text" name="supporting_document[]"></td>
+                                        <td><input type="text" name="title_of_document[]" value="{{$trainerQualifications->title_of_document}}"></td>
+                                        <td><input type="text" name="supporting_document[]" value="{{$trainerQualifications->supporting_document}}"></td>
 
-                                        <td><input type="text" name="remarks[]"></td>
+                                        <td><input type="text" name="remarks[]" value="{{$trainerQualifications->remarks}}"></td>
                                     </tbody>
                                 </table>
                             </div>
@@ -606,8 +605,8 @@ $users = DB::table('users')
                                 <label for="trainingQualificationStatus">Training Qualification Status ?</label>
                                 <select name="trainingQualificationStatus[]" id="trainingQualificationStatus">
                                     <option value="">-- Select --</option>
-                                    <option value="Production">Qualified</option>
-                                    <option value="QC">Not Qualified</option>
+                                    <option value="Qualified" @if ($trainerQualifications->trainingQualificationStatus == 'Qualified')selected @endif>Qualified</option>
+                                    <option value="Not Qualified" @if ($trainerQualifications->trainingQualificationStatus == 'Not Qualified')selected @endif>Not Qualified</option>
                                 </select>
                             </div>
                         </div>
@@ -616,7 +615,8 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Q_comment">Qualification Comments</label>
                                 <textarea class="summernote" name="Q_comment" id="summernote-1">
-                                    </textarea>
+                                {{$trainerQualifications->Q_comment}}
+                                </textarea>
                             </div>
                         </div>
 
@@ -689,7 +689,13 @@ $users = DB::table('users')
                                         documents</small></div>
                                 {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="audit_file_attachment"></div>
+                                    <div class="file-attachment-list" id="audit_file_attachment">
+                                        @if (!empty($Trainer->inv_attachment))
+                                        @foreach (json_decode($Trainer->inv_attachment) as $attachment)
+                                        <div>{{ $attachment->inv_attachment }}</div>
+                                        @endforeach
+                                        @endif
+                                    </div>
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="inv_attachment[]" oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple>
