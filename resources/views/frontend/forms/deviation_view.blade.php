@@ -940,11 +940,13 @@ wow = new WOW(
                                             // }
                                         @endphp
                                         <label for="If Other">Deviation Observed By<span class="text-danger">*</span></label>
+
                                         <select multiple name="Facility[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} placeholder="Select Facility Name" data-search="false" data-silent-initial-value-set="true" id="Facility">
                                             @foreach ($users as $user)
                                                 <option {{ (in_array($user->id, $selectedFacilities) || in_array($user->id, $inputFacilities))  ? 'selected' : '' }} value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach                                           
                                         </select>
+                                        
                                         @error('Facility')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
