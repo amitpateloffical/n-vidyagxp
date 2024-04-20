@@ -2587,5 +2587,403 @@ $group->save();
         $group->description = "Corporate/India-Change Control- View Only";
         $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
         $group->save();
+
+
+
+
+        // new role group
+
+        $group = new RoleGroup();
+        $group->id = 386;
+        $group->name = "India APAC-New Document- Initiator";
+        $group->description = "India APAC-New Document- Initiator";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 387;
+        $group->name = "India APAC-New Document- Reviewer";
+        $group->description = "India APAC-New Document- Reviewer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 388;
+        $group->name = "India APAC-New Document- Approver";
+        $group->description = "India APAC-New Document- Approver";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 389;
+        $group->name = "India APAC-New Document- Trainer";
+        $group->description = "India APAC-New Document- Trainer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 390;
+        $group->name = "South Korea-New Document- Initiator";
+        $group->description = "South Korea-New Document- Initiator";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 391;
+        $group->name = "South Korea-New Document- Reviewer";
+        $group->description = "South Korea-New Document- Reviewer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 392;
+        $group->name = "South Korea-New Document- Approver";
+        $group->description = "South Korea-New Document- Approver";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 393;
+        $group->name = "South Korea-New Document- Trainer";
+        $group->description = "South Korea-New Document- Trainer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 394;
+        $group->name = "Japan-New Document- Initiator";
+        $group->description = "Japan-New Document- Initiator";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 395;
+        $group->name = "Japan-New Document- Reviewer";
+        $group->description = "Japan-New Document- Reviewer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 396;
+        $group->name = "Japan-New Document- Approver";
+        $group->description = "Japan-New Document- Approver";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 397;
+        $group->name = "Japan-New Document- Trainer";
+        $group->description = "Japan-New Document- Trainer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 398;
+        $group->name = "Indonesia-New Document- Initiator";
+        $group->description = "Indonesia-New Document- Initiator";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 399;
+        $group->name = "Indonesia-New Document- Reviewer";
+        $group->description = "Indonesia-New Document- Reviewer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 400;
+        $group->name = "Indonesia-New Document- Approver";
+        $group->description = "Indonesia-New Document- Approver";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 401;
+        $group->name = "Indonesia-New Document- Trainer";
+        $group->description = "Indonesia-New Document- Trainer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 402;
+        $group->name = "Malaysia-New Document- Initiator";
+        $group->description = "Malaysia-New Document- Initiator";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 403;
+        $group->name = "Malaysia-New Document- Reviewer";
+        $group->description = "Malaysia-New Document- Reviewer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 404;
+        $group->name = "Malaysia-New Document- Approver";
+        $group->description = "Malaysia-New Document- Approver";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 405;
+        $group->name = "Malaysia-New Document- Trainer";
+        $group->description = "Malaysia-New Document- Trainer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 406;
+        $group->name = "Singapore-New Document- Initiator";
+        $group->description = "Singapore-New Document- Initiator";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 407;
+        $group->name = "Singapore-New Document- Reviewer";
+        $group->description = "Singapore-New Document- Reviewer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 408;
+        $group->name = "Singapore-New Document- Approver";
+        $group->description = "Singapore-New Document- Approver";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 409;
+        $group->name = "Singapore-New Document- Trainer";
+        $group->description = "Singapore-New Document- Trainer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 410;
+        $group->name = "North America-New Document- Initiator";
+        $group->description = "North America-New Document- Initiator";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 411;
+        $group->name = "North America-New Document- Reviewer";
+        $group->description = "North America-New Document- Reviewer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 412;
+        $group->name = "North America-New Document- Approver";
+        $group->description = "North America-New Document- Approver";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 413;
+        $group->name = "North America-New Document- Trainer";
+        $group->description = "North America-New Document- Trainer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 414;
+        $group->name = "EU-New Document- Initiator";
+        $group->description = "EU-New Document- Initiator";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 415;
+        $group->name = "EU-New Document- Reviewer";
+        $group->description = "EU-New Document- Reviewer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 416;
+        $group->name = "EU-New Document- Approver";
+        $group->description = "EU-New Document- Approver";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 417;
+        $group->name = "EU-New Document- Trainer";
+        $group->description = "EU-New Document- Trainer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 418;
+        $group->name = "United Kingdom-New Document- Initiator";
+        $group->description = "United Kingdom-New Document- Initiator";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 419;
+        $group->name = "United Kingdom-New Document- Reviewer";
+        $group->description = "United Kingdom-New Document- Reviewer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 420;
+        $group->name = "United Kingdom-New Document- Approver";
+        $group->description = "United Kingdom-New Document- Approver";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 421;
+        $group->name = "United Kingdom-New Document- Trainer";
+        $group->description = "United Kingdom-New Document- Trainer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 422;
+        $group->name = "Australia & New Zealand-New Document- Initiator";
+        $group->description = "Australia & New Zealand-New Document- Initiator";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 423;
+        $group->name = "Australia & New Zealand-New Document- Reviewer";
+        $group->description = "Australia & New Zealand-New Document- Reviewer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 424;
+        $group->name = "Australia & New Zealand-New Document- Approver";
+        $group->description = "Australia & New Zealand-New Document- Approver";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 425;
+        $group->name = "Australia & New Zealand-New Document- Trainer";
+        $group->description = "Australia & New Zealand-New Document- Trainer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 426;
+        $group->name = "South America-New Document- Initiator";
+        $group->description = "South America-New Document- Initiator";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 427;
+        $group->name = "South America-New Document- Reviewer";
+        $group->description = "South America-New Document- Reviewer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 428;
+        $group->name = "South America-New Document- Approver";
+        $group->description = "South America-New Document- Approver";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 429;
+        $group->name = "South America-New Document- Trainer";
+        $group->description = "South America-New Document- Trainer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 430;
+        $group->name = "China-New Document- Initiator";
+        $group->description = "China-New Document- Initiator";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 431;
+        $group->name = "China-New Document- Reviewer";
+        $group->description = "China-New Document- Reviewer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 432;
+        $group->name = "China-New Document- Approver";
+        $group->description = "China-New Document- Approver";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 433;
+        $group->name = "China-New Document- Trainer";
+        $group->description = "China-New Document- Trainer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 434;
+        $group->name = "Taiwan-New Document- Initiator";
+        $group->description = "Taiwan-New Document- Initiator";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 435;
+        $group->name = "Taiwan-New Document- Reviewer";
+        $group->description = "Taiwan-New Document- Reviewer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 436;
+        $group->name = "Taiwan-New Document- Approver";
+        $group->description = "Taiwan-New Document- Approver";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 437;
+        $group->name = "Taiwan-New Document- Trainer";
+        $group->description = "Taiwan-New Document- Trainer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 438;
+        $group->name = "Corporate-New Document- Initiator";
+        $group->description = "Corporate-New Document- Initiator";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 439;
+        $group->name = "Corporate-New Document- Reviewer";
+        $group->description = "Corporate-New Document- Reviewer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 440;
+        $group->name = "Corporate-New Document- Approver";
+        $group->description = "Corporate-New Document- Approver";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group = new RoleGroup();
+        $group->id = 441;
+        $group->name = "Corporate-New Document- Trainer";
+        $group->description = "Corporate-New Document- Trainer";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
 }
 }
