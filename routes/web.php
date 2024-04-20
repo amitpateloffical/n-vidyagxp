@@ -32,6 +32,7 @@ use App\Http\Controllers\tms\QuestionBankController;
 use App\Http\Controllers\tms\QuestionController;
 use App\Http\Controllers\tms\QuizeController;
 use App\Http\Controllers\rcms\DeviationController;
+use App\Http\Controllers\nirvanaController;
 use App\Imports\DocumentsImport;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
@@ -269,6 +270,22 @@ Route::view('trainer_qualification', 'frontend.TMS.trainer_qualification');
 Route::view('classroom_training', 'frontend.TMS.classroom_training');
 Route::view('classroom_training_view', 'frontend.TMS.classroom_training_view');
 Route::view('trainer_qualification_view', 'frontend.TMS.trainer_qualification_view');
+
+//================================nirvana routes store============================================
+Route::post('/nirvanastore', [nirvanaController::class, 'store'])->name('nirvanastore');
+Route::post('nirvanaupdate/{id}', [nirvanaController::class, 'update'])->name('nirvanaupdate');
+
+Route::get('classroomdetails/{id}', [nirvanaController::class, 'classroomdetails'])->name('classroomdetails');
+
+
+
+
+
+
+
+
+
+
 
 
 

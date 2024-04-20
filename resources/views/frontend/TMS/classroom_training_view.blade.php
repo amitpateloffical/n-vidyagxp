@@ -88,7 +88,8 @@
 
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +'"></td>' +
+                        '<td><input disabled type="text" name="serial[" value="' + serialNumber +'"></td>' +
+
                         '<td><input type="text" name="Title_Document[]"></td>'+
                         '<td><input type="text" name="Supporting_Documents[]"></td>'+
 
@@ -296,7 +297,7 @@
                        
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
-                         <button class="button_theme1"> <a class="text-white" href=""> {{-- add here url for auditTrail i.e. href="{{ url('CapaAuditTrial', $data->id) }}" --}}
+                         <button class="button_theme1"> <a class="text-white" href=""> {{-- add here url for auditTrail i.e. href="{{ url('CapaAuditTrial', $nirvana->id) }}" --}}
                                 Audit Trail </a> </button>
 
                        
@@ -333,19 +334,19 @@
                   
                         <div class="progress-bars">
                             
-                            {{-- @if ($data->stage >= 1) --}}
+                            {{-- @if ($nirvana->stage >= 1) --}}
                             <div class="active">Opened</div>
                         {{-- @else --}}
                             {{-- <div class="">Opened</div> --}}
                         {{-- @endif --}}
 
-                        {{-- @if ($data->stage >= 2) --}}
+                        {{-- @if ($nirvana->stage >= 2) --}}
                             {{-- <div class="active">Available For Registration </div> --}}
                         {{-- @else --}}
                             <div class="">Available For Registration</div>
                         {{-- @endif --}}
 
-                        {{-- @if ($data->stage >= 3) --}}
+                        {{-- @if ($nirvana->stage >= 3) --}}
                             {{-- <div class="active">Pending Registration
                                 Approval</div> --}}
                         {{-- @else --}}
@@ -353,14 +354,14 @@
                                 Approval</div>
                         {{-- @endif --}}
 
-                        {{-- @if ($data->stage >= 4) --}}
+                        {{-- @if ($nirvana->stage >= 4) --}}
                             {{-- <div class="active">Awaiting Class</div> --}}
                         {{-- @else --}}
                             <div class="">Awaiting Class</div>
                         {{-- @endif --}}
 
 
-                        {{-- @if ($data->stage >= 5) --}}
+                        {{-- @if ($nirvana->stage >= 5) --}}
                             {{-- <div class="active">Closed - Completed</div> --}}
                         {{-- @else --}}
                             <div class="">Closed - Completed</div>
@@ -378,9 +379,14 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">ClassRoom Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
-
-            <form id="auditform" action="{{ route('createInternalAudit') }}" method="post" enctype="multipart/form-data">
+           @if(session('message'))
+    <div class="alert alert-success">
+        {{ session('message') }}
+    </div>
+@endif
+            <form id="auditform" action="{{ route('nirvanaupdate', $nirvana->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
+               
                 <div id="step-form">
 
                     <!-- General information content -->
@@ -396,7 +402,7 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
-                                            value="">
+                                            value="{{ $nirvana->record_number }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -418,7 +424,7 @@
                                     <div class="group-input">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
                                         <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ $nirvana->intiation_date }}" name="intiation_date">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -429,7 +435,7 @@
                                         <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                <option value="">{{ $data->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('assign_to')
@@ -445,10 +451,10 @@
                                         {{-- <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
                                         </div> --}}
                                         <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="due_date" readonly 
+                                                placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($nirvana->due_date) }}" />
                                             <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                                                oninput="handleDateInput(this, 'due_date')" value="{{ Helpers::getdateFormat($nirvana->due_date) }}" />
                                         </div>
                                     </div>
                                 </div>
@@ -460,7 +466,7 @@
                                         <label for="Short Description">Short Description<span
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining
-                                        <input id="docname" type="text" name="short_description" maxlength="255" required>
+                                        <input id="docname" type="text" name="short_description" maxlength="255" required value = "{{ $nirvana->short_description }}">
                                     </div>
                                 </div>  
                                 
@@ -469,15 +475,15 @@
                                     <div class="group-input" id="initiated_through_req">
                                         <label for="If Other">Class/Session  Information
                                             <span class="text-danger d-none">*</span></label>
-                                        <textarea name="Class_Session_information"></textarea>
+                                        <textarea name="Class_Session_information" value = "{{ $nirvana->Class_Session_information }}"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="audit_type">Trainer Name</label>
-                                        <select name="Trainer_Name">
+                                        <select name="Trainer_Name" >
                                             <option value="">Enter Your Selection Here</option>
-                                            <option value="R&D">Nilesh</option>
+                                            <option value="{{ $nirvana->Trainer_Name }}">Nilesh</option>
                                            
                                         </select>
                                     </div>
@@ -486,14 +492,14 @@
                                     <div class="group-input">
                                         <label for="audit_type">Registration Start Date
                                             </label>
-                                      <input type="date" name="registrationend_date" type="text">
+                                      <input type="date" name="registrationend_date" type="text" value = "{{ $nirvana->registrationend_date }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="audit_type">Registration End Date
                                             </label>
-                                      <input type="date" name="registrationend_date" type="text">
+                                      <input type="date" name="registrationend_date" type="text" value = "{{ $nirvana->registrationend_date }}">
                                     </div>
                                 </div>
                                 
@@ -501,7 +507,7 @@
                                     <div class="group-input">
                                         <label for="audit_type">Training Topic
                                             </label>
-                                      <input type="text" name="Training_Topic" type="text">
+                                      <input type="text" name="Training_Topic" type="text" value = "{{ $nirvana->Training_Topic }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -509,7 +515,7 @@
                                         <label for="audit_type">Scheduled Start Date
 
                                             </label>
-                                      <input type="date" name="Scheduled_Start_date" type="text">
+                                      <input type="date" name="Scheduled_Start_date" type="text" value = "{{ $nirvana->Scheduled_Start_date }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -517,14 +523,14 @@
                                         <label for="audit_type">Scheduled End Date
 
                                             </label>
-                                      <input type="date" name="Scheduled_End_date" type="text">
+                                      <input type="date" name="Scheduled_End_date" type="text" value = "{{ $nirvana->Scheduled_End_date }}">
                                     </div>
                                 </div>
                                
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Initial Comments">Description</label>
-                                        <textarea name="initial_comments"></textarea>
+                                        <textarea name="initial_comments" value = "{{ $nirvana->initial_comments }}"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -532,7 +538,7 @@
                                         <label for="audit-agenda-grid">
                                            List Of Attachments
                                             <button type="button" name="audit-agenda-grid"
-                                                id="List_Attachments_details">+</button>
+                                                id="List_Attachments_details" value = "{{ $nirvana->audit_agenda_grid }}">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#observation-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -558,10 +564,10 @@
                                                 <tbody >
                                                     <td><input disabled type="text" name="serial_number[]" value="1">
                                                     </td>
-                                                <td><input type="text" name="Title_Document[]"></td>
-                                                <td><input type="text" name="Supporting_Documents[]"></td>
+                                                <td><input type="text" name="Title_Document[]" value = "{{ $nirvana->Title_Document }}"></td>
+                                                <td><input type="text" name="Supporting_Documents[]" value = "{{ $nirvana->Supporting_Documents }}"></td>
 
-                                                <td><input type="text" name="Remarks[]"></td>
+                                                <td><input type="text" name="Remarks[]" value = "{{ $nirvana->Remarks }}"></td>
 
 
                                                   
@@ -576,7 +582,7 @@
                                         <label for="audit-agenda-grid">
                                          Agenda
                                             <button type="button" name="audit-agenda-grid"
-                                                id="Agenda_details">+</button>
+                                                id="Agenda_details" value = "{{ $nirvana }}">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#observation-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -610,14 +616,14 @@
                                                 <tbody >
                                                     <td><input disabled type="text" name="serial_number[]" value="1">
                                                     </td>
-                                                <td><input type="text" name="date[]"></td>
-                                                <td><input type="text" name="start_time[]"></td>
-                                                <td><input type="text" name="end_time[]"></td>
-                                                <td><input type="text" name="topic[]"></td>
-                                                <td><input type="text" name="responsible_person[]"></td>
-                                                <td><input type="text" name="Supporting_Documents[]"></td>
-                                                <td><input type="text" name="status[]"></td>
-                                                <td><input type="text" name="Remarks[]"></td>
+                                                <td><input type="text" name="date[]" value = "{{ $nirvana->date }}"></td>
+                                                <td><input type="text" name="start_time[]" value = "{{ $nirvana->start_time }}"></td>
+                                                <td><input type="text" name="end_time[]" value = "{{ $nirvana->end_time }}"></td>
+                                                <td><input type="text" name="topic[]" value = "{{ $nirvana->topic }}"></td>
+                                                <td><input type="text" name="responsible_person[]" value = "{{ $nirvana->responsible_person }}"></td>
+                                                <td><input type="text" name="Supporting_Documents[]" value = "{{ $nirvana->Supporting_Documents }}"></td>
+                                                <td><input type="text" name="status[]" value = "{{ $nirvana->status }}"></td>
+                                                <td><input type="text" name="Remarks[]" value = "{{ $nirvana->Remarks }}"></td>
 
 
                                                   
@@ -637,7 +643,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="training_material[]"
-                                                    oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple>
+                                                    oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple value = "{{ $nirvana->training_material }}">
                                             </div>
                                         </div>
 
