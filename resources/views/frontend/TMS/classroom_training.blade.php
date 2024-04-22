@@ -266,7 +266,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
 
-            <form id="auditform" action="{{ route('createInternalAudit') }}" method="post" enctype="multipart/form-data">
+            <form id="auditform" action="{{ route('nirvanastore') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
 
@@ -297,7 +297,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
-                                        <input disabled type="text" value="{{ Auth::user()->name }}">
+                                        <input disabled type="text" value="" >
 
                                     </div>
                                 </div>
@@ -443,12 +443,12 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody >
-                                                    <td><input disabled type="text" name="serial_number[]" value="1">
+                                                    <td><input disabled type="text" name="serial_number" value="1">
                                                     </td>
-                                                <td><input type="text" name="Title_Document[]"></td>
-                                                <td><input type="text" name="Supporting_Documents[]"></td>
+                                                <td><input type="text" name="Title_Document"></td>
+                                                <td><input type="text" name="Supporting_Documents"></td>
 
-                                                <td><input type="text" name="Remarks[]"></td>
+                                                <td><input type="text" name="Remarks"></td>
 
 
                                                   
@@ -495,16 +495,16 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody >
-                                                    <td><input disabled type="text" name="serial_number[]" value="1">
+                                                    <td><input disabled type="text" name="serial_number" value="1">
                                                     </td>
-                                                <td><input type="text" name="date[]"></td>
-                                                <td><input type="text" name="start_time[]"></td>
-                                                <td><input type="text" name="end_time[]"></td>
-                                                <td><input type="text" name="topic[]"></td>
-                                                <td><input type="text" name="responsible_person[]"></td>
-                                                <td><input type="text" name="Supporting_Documents[]"></td>
-                                                <td><input type="text" name="status[]"></td>
-                                                <td><input type="text" name="Remarks[]"></td>
+                                                <td><input type="text" name="date"></td>
+                                                <td><input type="text" name="start_time"></td>
+                                                <td><input type="text" name="end_time"></td>
+                                                <td><input type="text" name="topic"></td>
+                                                <td><input type="text" name="responsible_person"></td>
+                                                <td><input type="text" name="Supporting_Documents"></td>
+                                                <td><input type="text" name="status"></td>
+                                                <td><input type="text" name="Remarks"></td>
 
 
                                                   
@@ -520,10 +520,10 @@
                                                 documents</small></div>
                                         {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="audit_file_attachment"></div>
+                                            <div class="file-attachment-list" id="audit_file_attachment"  name = "audit_file_attachment"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="training_material[]"
+                                                <input type="file" id="myfile" name="training_material"
                                                     oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple>
                                             </div>
                                         </div>
@@ -577,20 +577,21 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
+                                                <td><input disabled type="text" name="serial_number" value="1">
+                                                
                                                 </td>
-                                                <td><input type="text" name="TrainingTopic[]"></td>
-                                                <td><input type="text" name="TrainersMultipersonField[]"></td>
-                                                <td><input type="text" name="AttendeeName[]"></td>
-                                                <td><input type="text" name="Department[]"></td>
-                                                <td><input type="text" name="TrainingAttended[]"></td>
-                                                <td><input type="text" name="Training_ModeOnline_Classroom[]"></td>
-                                                <td><input type="text" name="Training_Completion_Date[]"></td>
-                                                <td><input type="text" name="pass_fail[]"></td>
-                                                <td><input type="text" name="No_Attempts[]"></td>
-                                                <td><input type="text" name="Rating[]"></td>
-                                                <td><input type="text" name="Supporting Document[]"></td>
-                                                <td><input type="text" name="remarks[]"></td>
+                                                <td><input type="text" name="TrainingTopic"></td>
+                                                <td><input type="text" name="TrainersMultipersonField"></td>
+                                                <td><input type="text" name="AttendeeName"></td>
+                                                <td><input type="text" name="Department"></td>
+                                                <td><input type="text" name="TrainingAttended"></td>
+                                                <td><input type="text" name="Training_ModeOnline_Classroom"></td>
+                                                <td><input type="text" name="Training_Completion_Date"></td>
+                                                <td><input type="text" name="pass_fail"></td>
+                                                <td><input type="text" name="No_Attempts"></td>
+                                                <td><input type="text" name="Rating"></td>
+                                                <td><input type="text" name="Supporting Document"></td>
+                                                <td><input type="text" name="remarks_2"></td>
 
 
                                             </tbody>
@@ -619,11 +620,11 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
+                                                <td><input disabled type="text" name="serial_number" value="1">
                                                 </td>
-                                                <td><input type="text" name="Title_Document[]"></td>
-                                                <td><input type="text" name="Supporting_Document[]"></td>
-                                                <td><input type="text" name="Remarks[]"></td>
+                                                <td><input type="text" name="Title_Document_2"></td>
+                                                <td><input type="text" name="Supporting_Document-3"></td>
+                                                <td><input type="text" name="Remarks_3"></td>
                                                 
 
 
