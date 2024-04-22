@@ -30,7 +30,48 @@
                             {{-- <a data-bs-toggle="modal" data-bs-target="#subscribe-modal">Subscribe</a> --}}
                             {{-- <a href="#"><i class="fa-solid fa-caret-down"></i></a> --}}
                         </div>
+
+                        
                     </div>
+                    {{-- <div class="inner-block"> --}}
+                        {{-- @php
+                        dd($employeeData);
+                        @endphp --}}
+                        <div class="block-table">
+                            <table style="margin-top: 15px;" class="table table-bordered">
+                                <thead style="background: #eba645;">
+                                    <tr>
+                                        <th style="width:7%;">Record</th>
+                                        <th>Division</th>
+                                        <th>Date Opened</th>{{--  //Initaion Date --}}
+                                        <th>Originator</th>
+                                        <th>Due Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($employeeData as $employee)
+                                    <tr>
+                                        <td>
+                                            <a 
+                                            href="{{ route('employeeShow', $employee['id']) }}" style="color: blue">
+                                                {{ str_pad($employee['id'], 4, '0', STR_PAD_LEFT) }}
+                                            </a>
+                                          
+                                        </td>
+                                        <td>{{ $employee['division_id'] }}</td>
+                                        <td>{{ $employee['intiation_date'] }}</td>
+                                        <td>{{ $employee['initiator'] }}</td>
+                                        <td>{{ $employee['due_date'] }}</td>
+
+                                        <td>{{ $employee['status'] }}</td>
+                                         {{-- Assuming there's a 'status' key in $employeeData --}}
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    {{-- </div> --}}
                 </div>
 
                 <div class="tms-dashboard-tabs">
@@ -51,6 +92,8 @@
                         <div><i class="fa-solid fa-circle-check"></i>&nbsp;Completed</div>
                     </div> --}}
                 </div>
+
+
 
                 <div class="inner-block tms-block" id="tms-all-block">
                     @if (Helpers::checkRoles(6))

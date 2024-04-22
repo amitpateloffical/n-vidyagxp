@@ -173,6 +173,35 @@
         .calenderauditee input::-webkit-calendar-picker-indicator {
             width: 100%;
         }
+        .progress-bars {
+    display: flex;
+}
+.progress-bars div.active {
+    background: #1fa51f;
+    font-weight: bold;
+}
+
+
+.progress-bars div{
+    flex: 1 1 auto;
+    border: 1px solid grey;
+    padding: 5px;
+    text-align: center;
+    position: relative;
+    border-right: none;
+}
+.progress-bars div:nth-child(1) {
+    border-radius: 20px 0 0 20px;
+}
+.progress-bars div:nth-last-child(1) {
+    border-radius: 0 20px 20px 0;
+}
+.main-head1{
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 20px;
+}
     </style>
     <div class="form-field-head">
 
@@ -195,6 +224,57 @@
         <div class="container-fluid">
 
 
+            <div class="inner-block state-block">
+                <div class="d-flex justify-content-between align-items-center"> 
+                    <div class="main-head1">Record Workflow </div>
+                    @php
+                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
+                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                    @endphp
+                    <div class="d-flex" style="gap:20px;">
+                        @if(in_array(43, $userRoleIds))  
+                            @if ($data->stage == 1)                   
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                    Activate
+                                </button>
+                            @elseif($data->stage == 2)
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                    Retire
+                                </button>
+                                <button class="button_theme1"> 
+                                    <a class="text-white" href="{{ url('TMS') }}"> Exit </a> 
+                                </button>
+                            @endif
+                        @endif      
+                    </div>
+
+                </div>
+                <div class="status">
+                    <div class="head">Current Status</div>
+                        <div class="progress-bars">
+                            
+                            @if ($data->stage >= 1)
+                            <div class="active">Opened</div>
+                        @else
+                            <div class="">Opened</div>
+                        @endif
+
+                        @if ($data->stage >= 2)
+                            <div class="active">Active </div>
+                        @else
+                            <div class="">Active </div>
+                        @endif
+                        @if ($data->stage >= 3)
+                            <div class="active">Closed - Retired</div>
+                        @else
+                            <div class="">Closed - Retired</div>
+                        @endif
+                     
+
+                </div>
+            </div>
+        </div>
+
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
@@ -202,7 +282,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
 
-            <form id="auditform" action="{{ route('employee_tms_create') }}" method="post" enctype="multipart/form-data">
+            <form id="auditform" action="{{ route('employee_tms_update', $data->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
 
@@ -218,22 +298,22 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number"
-                                            value="">
+                                        <input readonly type="text" name="record_number"
+                                        value="{{ Helpers::getDivisionName($data->division_id) }}/CAPA/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code </b></label>
                                         <input readonly type="text" name="division_code"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        value="{{ Helpers::getDivisionName($data->division_id) }}">
+                                        {{-- <input type="hidden" name="division_id" value="{{ session()->get('division') }}"> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
-                                        <input disabled type="text" name="initiator" id="initiator" value="{{ Auth::user()->name }}">
+                                        <input readonly type="text" name="initiator" id="initiator" value="{{ $data->initiator_name }}">
 
                                     </div>
                                 </div>
@@ -306,7 +386,7 @@
                                     <div class="group-input">
                                         <label for="audit_type">Department Name
                                             </label>
-                                     <select name="department_name" id="">
+                                     <select name="department_name" id="department_name">
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="">1</option>
                                         <option value="">2</option>
@@ -318,7 +398,7 @@
                                     <div class="group-input">
                                         <label for="audit_type">Job Title
                                             </label>
-                                     <select name="job_title" id="">
+                                     <select name="job_title" id="job_title">
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="">1</option>
                                         <option value="">2</option>
@@ -326,23 +406,24 @@
                                      </select>
                                     </div>
                                 </div>
-
-                                <div class="col-lg-12">
+                               
+                                <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Audit Attachments">Attached CV</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <label for="Inv Attachments">Attached CV</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="attached_cv"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="HOD_Attachments" name="attached_cv[]"
+                                                <input type="file" id="myfile" name="attached_cv[]"
                                                     oninput="addMultipleFiles(this, 'attached_cv')" multiple>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
-
-
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Inv Attachments">Certification/Qualifications</label>
@@ -444,7 +525,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="room">Room</label>
+                                        <label for="floor">Room</label>
                                        <select name="room" id="room">
                                         <option value="">
                                             Enter Your Selection Here
