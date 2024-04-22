@@ -999,6 +999,115 @@
             </div>
         </div>
     </div>
+
+    {{-- CHAT PDF MODAL START --}}
+    <button 
+    style="position: sticky; bottom: 1rem; left: 95%;"
+    type="button" class="btn btn-primary rounded-circle shadow-lg" data-bs-toggle="modal" data-bs-target="#chatModal">
+        <img src="{{ asset('user/images/ai_2814666.png') }}" alt="chatWithDoc" class="img-fluid" style="width: 2rem; height: 2.4rem;">
+    </button>
+    
+    <div class="modal" tabindex="-1" id="chatModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Chat With Document</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="chat-content" id="chatContent">
+                
+              </div>
+            </div>
+            <div class="modal-footer">
+                <div>
+                    <input type="text" name="chatSendMessage" id="" placeholder="Enter your message here" class="form-control">
+                </div>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="sendChatBtn">Send</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    {{-- CHAT PDF MODAL END --}}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js" integrity="sha512-PJa3oQSLWRB7wHZ7GQ/g+qyv6r4mbuhmiDb8BjSFZ8NZ2a42oTtAq5n0ucWAwcQDlikAtkub+tPVCw4np27WCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+            
+        const config = {
+            headers: {
+                "x-api-key": "sec_qLUcsYBeIWAt564Tk5zhHg76DQHjastL",
+                "Content-Type": "application/json",
+            },
+        };
+
+        const data = {
+            url: "https://environmentallab.doculife.co.in/public/sop.pdf"
+        }
+
+        let srcId = "src_pqRrbFb6yiIkiISAcPU7O";
+
+        async function initializeChatModal()
+        {
+            console.log('initializeChatModal')
+            try {
+                const addPdfUrl = "https://api.chatpdf.com/v1/sources/add-url";
+
+                const res = await axios.post(addPdfUrl, data, config)
+
+                console.log('res', res);
+
+                let sourceId = res.data.sourceId;
+
+            } catch (err) {
+                console.log('Error in initializeChatModal fn', err.message)
+            }
+        }
+
+        async function sendChat()
+        {
+            $('#sendChatBtn').prop('disabled', true);
+            let message = $('input[name=chatSendMessage]').val();
+
+            const chatData = {
+                "sourceId": srcId,
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": message
+                    }
+                ]
+            }
+
+            try {
+
+                const chatPdfEndpoint = "https://api.chatpdf.com/v1/chats/message";
+
+                const res = await axios.post(chatPdfEndpoint, chatData, config)
+
+                console.log('res', res);
+
+                let resMsg = res.data.content;
+
+                $('#chatContent').append('<p>'+ resMsg +'</p>')
+
+            } catch (err) {
+                console.log('Error in sendChat fn', err.message)
+            }
+            $('#sendChatBtn').prop('disabled', false);
+            $('input[name=chatSendMessage]').val('');
+            
+        }
+
+        // initializeChatModal();
+
+        $('#sendChatBtn').click(function() {
+            sendChat();
+        })
+
+    </script>
+
+
 <style>
 .group-input input {
 width: 60%;
