@@ -78,7 +78,7 @@ class TrainerQualificationController extends Controller
             $Trainer->inv_attachment = json_encode($files);
         }
         $Trainer->Save();       
-     return redirect()->route('TMS.index')->with('success', 'Data successfully stored!');
+     return redirect()->route('TMS.index')->with('success', 'record successfully saved !');
 
     }
 
@@ -137,7 +137,7 @@ class TrainerQualificationController extends Controller
             $Trainer->inv_attachment = json_encode($files);
         }
         $Trainer->update();       
-        return redirect()->with('success', 'Data successfully stored!');
+        return redirect()->route('update')->with('success', 'Data updated successfully stored!');
 
 
 
