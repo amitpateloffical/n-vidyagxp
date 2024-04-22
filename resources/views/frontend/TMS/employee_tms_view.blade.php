@@ -212,7 +212,6 @@
     </div>
 
 
-
     {{-- ======================================
                     DATA FIELDS
     ======================================= --}}
@@ -228,16 +227,16 @@
                 <div class="d-flex justify-content-between align-items-center"> 
                     <div class="main-head1">Record Workflow </div>
                     @php
-                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
+                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $docDetail->division_id])->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                     @endphp
                     <div class="d-flex" style="gap:20px;">
                         @if(in_array(43, $userRoleIds))  
-                            @if ($data->stage == 1)                   
+                            @if ($docDetail->stage == 1)                   
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     Activate
                                 </button>
-                            @elseif($data->stage == 2)
+                            @elseif($docDetail->stage == 2)
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     Retire
                                 </button>
@@ -253,18 +252,18 @@
                     <div class="head">Current Status</div>
                         <div class="progress-bars">
                             
-                            @if ($data->stage >= 1)
+                            @if ($docDetail->stage >= 1)
                             <div class="active">Opened</div>
                         @else
                             <div class="">Opened</div>
                         @endif
 
-                        @if ($data->stage >= 2)
+                        @if ($docDetail->stage >= 2)
                             <div class="active">Active </div>
                         @else
                             <div class="">Active </div>
                         @endif
-                        @if ($data->stage >= 3)
+                        @if ($docDetail->stage >= 3)
                             <div class="active">Closed - Retired</div>
                         @else
                             <div class="">Closed - Retired</div>
@@ -282,7 +281,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
 
-            <form id="auditform" action="{{ route('employee_tms_update', $data->id) }}" method="post" enctype="multipart/form-data">
+            <form id="auditform" action="{{ route('employee_tms_update', $docDetail->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
 
@@ -299,21 +298,21 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input readonly type="text" name="record_number"
-                                        value="{{ Helpers::getDivisionName($data->division_id) }}/CAPA/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                        value="{{ Helpers::getDivisionName($docDetail->division_id) }}/CAPA/{{ Helpers::year($docDetail->created_at) }}/{{ $docDetail->record }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code </b></label>
                                         <input readonly type="text" name="division_code"
-                                        value="{{ Helpers::getDivisionName($data->division_id) }}">
+                                        value="{{ Helpers::getDivisionName($docDetail->division_id) }}">
                                         {{-- <input type="hidden" name="division_id" value="{{ session()->get('division') }}"> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
-                                        <input readonly type="text" name="initiator" id="initiator" value="{{ $data->initiator_name }}">
+                                        <input readonly type="text" name="initiator" id="initiator" value="{{ $docDetail->initiator_name }}">
 
                                     </div>
                                 </div>
@@ -331,8 +330,8 @@
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
-                                            @foreach ($users as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @foreach ($users as $employee)
+                                                <option value="{{ $employee->id }}">{{ $employee->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('assign_to')
@@ -349,25 +348,24 @@
                                         </div> --}}
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
+                                                placeholder="DD-MMM-YYYY" value="{{$docDetail->due_date}}" />
                                             <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                                                oninput="handleDateInput(this, 'due_date')"  value="{{$docDetail->due_date}}"  />
                                         </div>
                                     </div>
                                 </div>
-                                
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="audit_type">Actual Start Date
                                             </label>
-                                      <input type="date" name="actual_Start_Date" type="text">
+                                      <input type="date" name="actual_Start_Date" type="text" value="{{$docDetail->actual_start_date}}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="audit_type">Employee ID
                                             </label>
-                                      <input type="number" name="employee_ID" type="text">
+                                      <input type="number" name="employee_ID" type="text" value="{{$docDetail->employee_ID}}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -376,8 +374,12 @@
                                             </label>
                                      <select name="gender" id="gender">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
+                                           {{-- <option value="recall" @if ($trainer->initiated_through == 'recall') selected @endif>Recall</option> --}}
+                                                        {{-- <option value="return" @if ($trainer->initiated_through == 'return') selected @endif>Return</option> --}}
+                       
+
+                                        <option value="male" @if ($docDetail->gender == 'male') selected @endif>Male</option>
+                                        <option value="female" @if ($docDetail->gender == 'female') selected @endif>Female</option>
 
                                      </select>
                                     </div>
@@ -388,8 +390,9 @@
                                             </label>
                                      <select name="department_name" id="department_name">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
+                                        <option  value="1" @if ($docDetail->department_name == '1') selected @endif>1</option>
+                                        <option value="2" @if ($docDetail->department_name == '2') selected @endif>2</option>
+                                        <option value="3" @if ($docDetail->department_name == '3') selected @endif>3</option>
 
                                      </select>
                                     </div>
@@ -400,8 +403,8 @@
                                             </label>
                                      <select name="job_title" id="job_title">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
+                                        <option value="1" @if ($docDetail->job_title == '1') selected @endif>1</option>
+                                        <option value="2" @if ($docDetail->job_title == '2') selected @endif>2</option>
 
                                      </select>
                                     </div>
@@ -414,12 +417,24 @@
                                                 documents</small></div>
                                         {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="attached_cv"></div>
+                                            <div class="file-attachment-list" id="attached_cv">
+                                                @if ($docDetail->attached_cv)
+                                                @foreach(json_decode($docDetail->attached_cv) as $file)
+                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                </h6>
+                                           @endforeach
+                                                @endif
+                                            </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="attached_cv[]"
-                                                    oninput="addMultipleFiles(this, 'attached_cv')" multiple>
-                                            </div>
+                                                    oninput="addMultipleFiles(this, 'attached_cv')" value="{{$docDetail->attached_cv}}"  multiple>
+                                            
+                                           
+                                                </div>
                                         </div>
 
                                     </div>
@@ -431,7 +446,15 @@
                                                 documents</small></div>
                                         {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="certificateClassification"></div>
+                                            <div class="file-attachment-list" id="certificateClassification"> @if ($docDetail->certificateClassification)
+                                                @foreach(json_decode($docDetail->certificateClassification) as $file)
+                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                </h6>
+                                           @endforeach
+                                                @endif</div>
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="certificateClassification[]"

@@ -308,9 +308,9 @@
                                             </label>
                                      <select name="department_name" id="">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
-
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
                                      </select>
                                     </div>
                                 </div>
@@ -320,8 +320,8 @@
                                             </label>
                                      <select name="job_title" id="">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
 
                                      </select>
                                     </div>

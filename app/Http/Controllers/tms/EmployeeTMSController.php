@@ -22,9 +22,8 @@ class EmployeeTMSController extends Controller
     // }
 
 public function employeeShow($id){
-    $data = EmployeeTMS::find($id);
-    // return $employee;
-    return view('frontend.TMS.employee_tms_view', compact('data'));
+    $docDetail = EmployeeTMS::find($id);
+   return view('frontend.TMS.employee_tms_view', compact('docDetail'));
 }
 
     public function store(Request $request)
