@@ -306,7 +306,7 @@
                                     <div class="group-input">
                                         <label for="audit_type">Department Name
                                             </label>
-                                     <select name="department_name" id="">
+                                     <select name="department_name" id="department_name">
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -316,9 +316,9 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="audit_type">Job Title
+                                        <label for="job_title">Job Title
                                             </label>
-                                     <select name="job_title" id="">
+                                     <select name="job_title" id="job_title">
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>

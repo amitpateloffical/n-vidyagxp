@@ -21,9 +21,47 @@ class EmployeeTMSController extends Controller
     //     return view('frontend.tms.index', compact('empolyee'));
     // }
 
+<<<<<<< Updated upstream
 public function employeeShow($id){
     $docDetail = EmployeeTMS::find($id);
    return view('frontend.TMS.employee_tms_view', compact('docDetail'));
+=======
+ public function employeeShow($id)
+ {
+    $employee = EmployeeTMS::find($id);
+
+
+    // $data = EmployeeTMS::where('employee_id', $data->employee_ID)->first();
+    // $data = EmployeeTMS::where('division_id', $data->division_id)->get();
+
+
+    //  $detail = DeviationAuditTrail::find($id);
+    //     $detail_data = DeviationAuditTrail::where('activity_type', $detail->activity_type)->where('deviation_id', $detail->deviation_id)->latest()->get();
+    //     $doc = Deviation::where('id', $detail->deviation_id)->first();
+    //     $doc->origiator_name = User::find($doc->initiator_id);
+    //     return view('frontend.forms.audit-trial-deviation-inner', compact('detail', 'doc', 'detail_data'));
+     
+
+    //     $old_record = Deviation::select('id', 'division_id', 'record')->get();
+    //     $data = Deviation::find($id);
+    //     $data1 = DeviationCft::where('deviation_id', $id)->latest()->first();
+    //     $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
+    //     $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
+    //     $grid_data = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Deviation")->first();
+    //     $grid_data1 = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Document")->first();
+    // //    dd( $grid_data1);
+    //     // dd($grid_data );
+    //     $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
+    //     $pre = Deviation::all();
+    //     $divisionName = DB::table('q_m_s_divisions')->where('id', $data->division_id)->value('name');
+
+    //     return view('frontend.forms.deviation_view', compact('data', 'old_record', 'pre', 'data1', 'divisionName','grid_data','grid_data1'));
+    // /////////////////////////////////////////////////////////////////////////
+
+    // return $employee;
+    return view('frontend.TMS.employee_tms_view', compact('employee'));
+
+>>>>>>> Stashed changes
 }
 
     public function store(Request $request)
