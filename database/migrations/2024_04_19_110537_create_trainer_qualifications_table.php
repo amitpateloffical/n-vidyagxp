@@ -46,8 +46,10 @@ return new class extends Migration
             $table->longtext('rejected_by')->nullable();
             $table->longtext('rejected_on')->nullable();
             $table->longtext('submit_comment')->nullable();
-            $table->longtext('rejected_on')->nullable();
-            $table->longtext('rejected_on')->nullable();
+            $table->longtext('HOD_Review_Complete_By')->nullable();
+            $table->longtext('HOD_Review_Complete_On')->nullable();
+            $table->longtext('HOD_Review_Comments')->nullable();
+            
             $table->timestamps();
             $table->softDeletes();
 

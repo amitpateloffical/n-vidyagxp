@@ -103,7 +103,7 @@ class TrainerQualificationController extends Controller
 
 
         $Trainer = TrainerQualification::find($id);
-        $Trainer->division_id=$request->division_id;
+        $Trainer->division_id="7";
         $Trainer->intiation_date=$request->intiation_date;
         $Trainer->assign_to=$request->assign_to;
         $Trainer->due_date=$request->record_number;
@@ -265,7 +265,7 @@ class TrainerQualificationController extends Controller
                 $trainer->Stage = "3";
                 $trainer->status = "closed-Done";
                 $trainer->HOD_Review_Complete_By = Auth::user()->name;
-                $trainer->HOD_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                $trainer->HOD_Review_Complete_On = Carbon::now()->format('Y-m-d');
                 $trainer->HOD_Review_Comments = $request->comment;
 
 
