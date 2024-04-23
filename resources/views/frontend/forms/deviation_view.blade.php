@@ -320,6 +320,7 @@ $users = DB::table('users')
                         @php
                             $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                           // dd($userRoles);
                             $cftRolesAssignUsers = collect($userRoleIds); //->contains(fn ($roleId) => $roleId >= 22 && $roleId <= 33);
                             $cftUsers = DB::table('deviationcfts')->where(['deviation_id' => $data->id])->first();
 

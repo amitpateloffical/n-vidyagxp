@@ -274,8 +274,9 @@ Route::post('trainer_qualification_store', [TrainerQualificationController::clas
 Route::get('trainer_qualification_view/{id}', [TrainerQualificationController::class, 'show'])->name('trainer_qualification_view');
 Route::post('trainer_qualification_update/{id}', [TrainerQualificationController::class, 'update'])->name('trainer_qualification_update');
   
-Route::post('trainer/stage/{id}', [TrainerQualificationController::class, 'trainer_send_stage'])->name('trainer_send_stage');
-           
+Route::post('trainer_stage/{id}', [TrainerQualificationController::class, 'trainer_send_stage'])->name('trainer_send_stage');
+Route::post('trainer_reject/{id}', [TrainerQualificationController::class, 'trainer_reject'])->name('trainer_reject');
+                
 Route::view('classroom_training', 'frontend.TMS.classroom_training');
 //Route::view('classroom_training_view', 'frontend.TMS.classroom_training_view');
 //Route::view('trainer_qualification_view', 'frontend.TMS.trainer_qualification_view');

@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 use Carbon\Carbon;
-
 class TrainerQualificationController extends Controller
 {
     public function index()
@@ -41,7 +40,7 @@ class TrainerQualificationController extends Controller
        
         //dd($Trainer->all());
         // $Trainer->record_number=  ((RecordNumber::first()->value('counter')) + 1);
-        $Trainer->division_id=$request->division_id;
+        $Trainer->division_id="7";
         $Trainer->Initiator_id= Auth::user()->id;
         $Trainer->intiation_date=$request->intiation_date;
         $Trainer->assign_to=$request->assign_to;
@@ -84,9 +83,9 @@ class TrainerQualificationController extends Controller
         }
 
         $Trainer->status = 'Opened';
-        $Trainer->stage = 1;
+        $Trainer->Stage = 1;
         $Trainer->Save();       
-     return redirect()->route('TMS.index')->with('success', 'record successfully stored!');
+     return redirect()->route('TMS.index')->with('success', 'Data successfully stored!');
 
     }
 
@@ -164,7 +163,7 @@ class TrainerQualificationController extends Controller
             
             if ($trainer->Stage == 1) {
 
-                if ($trainer->status !== 'opened') 
+                if ($trainer->status !== 'Opened') 
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
@@ -181,11 +180,19 @@ class TrainerQualificationController extends Controller
                     ]);
                 }
 
+                
+
+                
+
                 $trainer->Stage = "2";
                 $trainer->status = "HOD Review";
                 $trainer->submit_by = Auth::user()->name;
-                $trainer->submit_on = Carbon::now()->format('d-M-Y');
+                $trainer->submit_on = Carbon::now()->format('Y-m-d'); // Corrected date format
                 $trainer->submit_comment = $request->comment;
+
+
+
+
 
                 // $history = new DeviationAuditTrail();
                 // $history->deviation_id = $id;
@@ -252,8 +259,83 @@ class TrainerQualificationController extends Controller
                 
                 return back();
             }
+            if ($trainer->Stage == 2) {
+            
+
+                $trainer->Stage = "3";
+                $trainer->status = "closed-Done";
+                $trainer->HOD_Review_Complete_By = Auth::user()->name;
+                $trainer->HOD_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                $trainer->HOD_Review_Comments = $request->comment;
+
+
+                $trainer->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
         return "test";
+    }
+
+
+    
+
+
+
+    public function trainer_reject(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        $trainer = TrainerQualification::find($id);
+
+      
+
+            if ($trainer->Stage == 2) {
+
+                $trainer->Stage = "1";
+                $trainer->status = "Opened";
+                $trainer->rejected_by = Auth::user()->name;
+                $trainer->rejected_on = Carbon::now()->format('Y-m-d');
+                $trainer->update();
+               
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            // if ($trainer->Stage == 3) {
+            //     $trainer->Stage = "2";
+            //     $trainer->status = "HOD Review  Qualified";
+            //     $trainer->form_progress = 'hod';
+
+            //     $trainer->qa_more_info_required_by = Auth::user()->name;
+            //     $trainer->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+
+            //     $deviation->update();
+               
+
+
+
+
+    }
     }
 }
