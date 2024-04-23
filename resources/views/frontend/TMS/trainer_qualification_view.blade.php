@@ -282,14 +282,25 @@
 
                     <div class="d-flex" style="gap:20px;">
                        
+
+                            @php
+                            $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $trainer->division_id])->get();
+                            $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                             @endphp
+
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
-                         <button class="button_theme1"> <a class="text-white" href=""> {{-- add here url for auditTrail i.e. href="{{ url('CapaAuditTrial', $data->id) }}" --}}
-                                Audit Trail </a> </button>
-
-                       
+                         
+                        @if ($trainer->Stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
+                            </button>
+                        @elseif($trainer->Stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#Reject">
+                                Reject
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#Qualified">
+                                Qualified
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
@@ -298,15 +309,10 @@
                                 More Info Required
                             </button> --}}
                           
-                            
-                              
-                           
-                            
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Approved
-                            </button>
+                        @endif 
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
-                            </a> </button>
+                        </a> </button>
+
 
 
                     </div>
@@ -315,37 +321,198 @@
                 <div class="status">
                     <div class="head">Current Status</div>
                  
-                        {{-- <div class="progress-bars">
+                        
+                        @if ($trainer->Stage == 0)
+                         <div class="progress-bars">
                             <div class="bg-danger">Closed-Cancelled</div>
-                        </div> --}}
+                        </div>
+                         @else
                   
                         <div class="progress-bars">
-                            
-                            {{-- @if ($data->stage >= 1) --}}
-                            <div class="active">Opened</div>
-                        {{-- @else --}}
-                            {{-- <div class="">Opened</div> --}}
-                        {{-- @endif --}}
-
-                        {{-- @if ($data->stage >= 2) --}}
-                            {{-- <div class="active">Pending HOD Review </div> --}}
-                        {{-- @else --}}
-                            <div class="">Pending HOD Review</div>
-                        {{-- @endif --}}
+                            @if ($trainer->Stage >= 1)
+                                <div class="active">Opened</div>
+                            @else
+                                <div class="">Opened</div>
+                            @endif
 
 
-                        {{-- @if ($data->stage >= 3) --}}
-                            {{-- <div class="active">Closed - Completed</div> --}}
-                        {{-- @else --}}
-                            <div class="">Closed - Completed</div>
-                        {{-- @endif --}}
-                     
+                            @if ($trainer->Stage >= 2)
+                                <div class="active">HOD Review </div>
+                            @else
+                                <div class="">HOD Review</div>
+                            @endif
 
-                </div>
+
+
+                            @if ($trainer->Stage == 3)
+                                <div class="bg-danger">Closed - Done</div>
+                            @else
+                                <div class="">Closed - Done</div>
+                            @endif
+                    @endif
+   </div>
                 {{-- @endif --}}
                 {{-- ---------------------------------------------------------------------------------------- --}}
             </div>
         </div>
+
+{{-- ----------------------------modal start--------------------------------- --}}
+
+    <div class="modal fade" id="signature-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+    
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="{{ route('trainer_send_stage', $trainer->id) }}" method="POST" id="signatureModalForm">
+                    @csrf
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input type="comment" name="comment">
+                        </div>
+                    </div>
+    
+                    <!-- Modal footer -->
+                    <!-- <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button>Close</button>
+                    </div> -->
+                    <div class="modal-footer">
+                        <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+ <div class="modal fade" id="Reject">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+    
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="{{ route('trainer_send_stage', $trainer->id) }}" method="POST" id="signatureModalForm">
+                    @csrf
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input type="comment" name="comment">
+                        </div>
+                    </div>
+    
+                    <!-- Modal footer -->
+                    <!-- <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button>Close</button>
+                    </div> -->
+                    <div class="modal-footer">
+                        <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+ <div class="modal fade" id="Qualified">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+    
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="{{ route('trainer_send_stage', $trainer->id) }}" method="POST" id="signatureModalForm">
+                    @csrf
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input type="comment" name="comment">
+                        </div>
+                    </div>
+    
+                    <!-- Modal footer -->
+                    <!-- <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button>Close</button>
+                    </div> -->
+                    <div class="modal-footer">
+                        <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+{{-- ----------------------------modal End--------------------------------- --}}
 
             <!-- Tab links -->
             <div class="cctab">

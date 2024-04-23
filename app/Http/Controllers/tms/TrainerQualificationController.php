@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers\tms;
 
+
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\TrainerQualification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
+use Carbon\Carbon;
 
 class TrainerQualificationController extends Controller
 {
@@ -36,7 +41,7 @@ class TrainerQualificationController extends Controller
        
         //dd($Trainer->all());
         // $Trainer->record_number=  ((RecordNumber::first()->value('counter')) + 1);
-        $Trainer->division_code=$request->division_code;
+        $Trainer->division_id=$request->division_id;
         $Trainer->Initiator_id= Auth::user()->id;
         $Trainer->intiation_date=$request->intiation_date;
         $Trainer->assign_to=$request->assign_to;
@@ -77,8 +82,11 @@ class TrainerQualificationController extends Controller
 
             $Trainer->inv_attachment = json_encode($files);
         }
+
+        $Trainer->status = 'Opened';
+        $Trainer->stage = 1;
         $Trainer->Save();       
-     return redirect()->route('TMS.index')->with('success', 'record successfully saved !');
+     return redirect()->route('TMS.index')->with('success', 'record successfully stored!');
 
     }
 
@@ -96,7 +104,7 @@ class TrainerQualificationController extends Controller
 
 
         $Trainer = TrainerQualification::find($id);
-        $Trainer->division_code=$request->division_code;
+        $Trainer->division_id=$request->division_id;
         $Trainer->intiation_date=$request->intiation_date;
         $Trainer->assign_to=$request->assign_to;
         $Trainer->due_date=$request->record_number;
@@ -137,8 +145,8 @@ class TrainerQualificationController extends Controller
             $Trainer->inv_attachment = json_encode($files);
         }
         $Trainer->update();       
-        return redirect()->route('update')->with('success', 'Data updated successfully stored!');
-
+        //return redirect()->with('success', 'Data successfully stored!');
+        return back();
 
 
 
@@ -146,4 +154,106 @@ class TrainerQualificationController extends Controller
 
 
 
+
+    public function trainer_send_stage(Request $request, $id)
+    {
+
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $trainer = TrainerQualification::find($id);
+
+            
+            if ($trainer->Stage == 1) {
+
+                if ($trainer->status !== 'opened') 
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'General Information Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for HOD review state'
+                    ]);
+                }
+
+                $trainer->Stage = "2";
+                $trainer->status = "HOD Review";
+                $trainer->submit_by = Auth::user()->name;
+                $trainer->submit_on = Carbon::now()->format('d-M-Y');
+                $trainer->submit_comment = $request->comment;
+
+                // $history = new DeviationAuditTrail();
+                // $history->deviation_id = $id;
+                // $history->activity_type = 'Activity Log';
+                // $history->previous = "";
+                // $history->action='Submit';
+                // $history->current = $deviation->submit_by;
+                // $history->comment = $request->comment;
+                // $history->user_id = Auth::user()->id;
+                // $history->user_name = Auth::user()->name;
+                // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                // $history->origin_state = $lastDocument->status;
+                // $history->change_to =   "HOD Review";
+                // $history->change_from = $lastDocument->status;
+                // $history->stage = 'Plan Proposed';
+                // $history->save();
+
+
+                // $list = Helpers::getHodUserList();
+                // foreach ($list as $u) {
+                //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                //         $email = Helpers::getInitiatorEmail($u->user_id);
+                //         if ($email !== null) {
+
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $deviation],
+                //                     function ($message) use ($email) {
+                //                         $message->to($email)
+                //                             ->subject("Activity Performed By " . Auth::user()->name);
+                //                     }
+                //                 );
+                //             } catch (\Exception $e) {
+                //                 //log error
+                //             }
+                //         }
+                //     }
+                // }
+
+                // $list = Helpers::getHeadoperationsUserList();
+                // foreach ($list as $u) {
+                //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                //         $email = Helpers::getInitiatorEmail($u->user_id);
+                //         if ($email !== null) {
+
+                //             Mail::send(
+                //                 'mail.Categorymail',
+                //                 ['data' => $deviation],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Activity Performed By " . Auth::user()->name);
+                //                 }
+                //             );
+                //         }
+                //     }
+                // }
+
+                
+
+
+                $trainer->update();
+
+                
+                return back();
+            }
+        }
+
+        return "test";
+    }
 }
