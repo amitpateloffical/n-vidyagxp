@@ -205,15 +205,15 @@
                     Welcome to IRCMS
                 </div>
             </div>
-            <form action="{{ url('rcms_check') }}" method="POST">
+            <form action="{{ url('rcms_check') }}" method="POST"  autocomplete="off">
                 @csrf
                 <div class="group-input">
                     <label for="username"><i class="fa-solid fa-envelope"></i></label>
-                    <input type="text" name="email" placeholder="Enter Your E-Mail">
+                    <input type="text" name="email" placeholder="Enter Your E-Mail"  autocomplete="off">
                 </div>
                 <div class="group-input">
                     <label for="password"><i class="fa-solid fa-lock"></i></label>
-                    <input type="password" name="password" placeholder="Enter Your Password">
+                    <input type="password" name="password" placeholder="Enter Your Password"  autocomplete="off">
                 </div>
                 <div class="group-input">
                     <label for="timezone"><i class="fa-solid fa-calendar-check"></i></label>

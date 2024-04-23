@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\nirvana;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class nirvanaController extends Controller
 {
@@ -27,7 +28,7 @@ class nirvanaController extends Controller
         # -------------new--------------------------------
         $nirvana->parent_id = $request->parent_id;
           $nirvana->record_number = $request->record_number;
-        $nirvana->division_id = $request->division_id;
+        $nirvana->division_id = "7";
         $nirvana->assign_to = $request->assign_to;
         $nirvana->due_date = $request->due_date;
         $nirvana->intiation_date = $request->intiation_date;
@@ -51,7 +52,8 @@ class nirvanaController extends Controller
         $nirvana->end_time = $request->end_time;
         $nirvana->topic = $request->topic;
         $nirvana->responsible_person = $request->responsible_person;
-        $nirvana->Supporting_Documents = $request->Supporting_Documents;
+        $nirvana->responsible_person = $request->responsible_person;
+        $nirvana->stage = "1";
       //  $nirvana->inv_attachment = $request->inv_attachment;
        // $nirvana->No_Attempts = $request->No_Attempts;
        // $nirvana->audit_file_attachment = $request->audit_file_attachment;
@@ -163,10 +165,77 @@ class nirvanaController extends Controller
 
         
           }
+          public function nirvana_send_stage(Request $request, $id)
+          {
+      
+              if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+                  $nirvana = nirvana::find($id);
+                 // $updateCFT = DeviationCft::where('deviation_id', $id)->latest()->first();
+                 // $lastDocument = Deviation::find($id);
+                 // $cftDetails = DeviationCftsResponse::withoutTrashed()->where(['status' => 'In-progress', 'deviation_id' => $id])->distinct('cft_user_id')->count();
+                  
+                  if ($nirvana->stage == 1) {
+      
+                    
+      
+                      $nirvana->stage = "2";
+                      $nirvana->status = "Avilable For Registration";
+                      $nirvana->submit_by = Auth::user()->name;
+                      $nirvana->submit_on = Carbon::now()->format('Y-m-d');
+                      $nirvana->submit_comment = $request->comment;
+      
+      
+      
+      
+                      $nirvana->update();
+      
+                      
+                      return back();
+                  }
+                  if ($nirvana->stage == 2) {
+                    $nirvana->stage = "3";
+                    $nirvana->status = "ending Registration
+                    Approval";
+                       
+                      // dd($history->action);
+                      
+                      $nirvana->update();
+                      toastr()->success('Document Sent');
+                      return back();
+                                  }
+                                  if ($nirvana->stage == 3) {
+                                    $nirvana->stage = "4";
+                                    $nirvana->status = "Awaiting Class";
+                                       
+                                      // dd($history->action);
+                                      
+                                      $nirvana->update();
+                                      toastr()->success('Document Sent');
+                                      return back();
+                                                  }
 
+                                                  if ($nirvana->stage == 4) {
+                                                    $nirvana->stage = "4";
+                                                    $nirvana->status = "Closed - Completed";
+                                                       
+                                                      // dd($history->action);
+                                                      
+                                                      $nirvana->update();
+                                                      toastr()->success('Document Sent');
+                                                      return back();
+                                                                  }
+                              }
+                          
+                            }
+                        
+
+                        }
+      
+              
+                 
+                    
+      
+                   
+                
             
-
-//         }
-
-
-}
+        

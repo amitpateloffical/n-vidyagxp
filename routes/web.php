@@ -276,6 +276,7 @@ Route::post('/nirvanastore', [nirvanaController::class, 'store'])->name('nirvana
 Route::post('nirvanaupdate/{id}', [nirvanaController::class, 'update'])->name('nirvanaupdate');
 
 Route::get('classroomdetails/{id}', [nirvanaController::class, 'classroomdetails'])->name('classroomdetails');
+Route::post('classroomdetails/stage/{id}', [nirvanaController::class, 'nirvana_send_stage'])->name('nirvana_send_stage');
 
 
 

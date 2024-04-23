@@ -226,18 +226,18 @@
             </div>
             <form id="updatePasswordForm" method="POST" action="/reset-password">
                 @csrf
-            <input type="hidden" name="mailId" value="{{ $email }}">
+            <input type="hidden" name="mailId" value="{{ $email }}"  autocomplete="off">
 
                 <div class="group-input">
                     <label for="password"><i class="fa-solid fa-lock"></i></label>
-                    <input type="password" id="password" name="password" placeholder="Enter Your Password" required minlength="8">
+                    <input type="password" id="password" name="password"  autocomplete="off" placeholder="Enter Your Password" required minlength="8">
                     <span class="toggle-password" onclick="togglePasswordVisibility('password')">
                         <i class="fa-solid fa-eye"></i>
                     </span>
                 </div>
                 <div class="group-input">
                     <label for="confirmPassword"><i class="fa-solid fa-lock"></i></label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Your Password" required minlength="8">
+                    <input type="password" id="confirmPassword"   autocomplete="off"name="confirmPassword" placeholder="Confirm Your Password" required minlength="8">
                     <span class="toggle-password" onclick="togglePasswordVisibility('confirmPassword')">
                         <i class="fa-solid fa-eye"></i>
                     </span>
