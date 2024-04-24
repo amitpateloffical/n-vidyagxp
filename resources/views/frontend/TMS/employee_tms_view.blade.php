@@ -227,28 +227,16 @@
                 <div class="d-flex justify-content-between align-items-center"> 
                     <div class="main-head1">Record Workflow </div>
                     @php
-<<<<<<< Updated upstream
                         $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $docDetail->division_id])->get();
-=======
-                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $employee->division_id])->get();
->>>>>>> Stashed changes
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                     @endphp
                     <div class="d-flex" style="gap:20px;">
                         @if(in_array(43, $userRoleIds))  
-<<<<<<< Updated upstream
                             @if ($docDetail->stage == 1)                   
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     Activate
                                 </button>
                             @elseif($docDetail->stage == 2)
-=======
-                            @if ($employee->stage == 1)                   
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                    Activate
-                                </button>
-                            @elseif($employee->stage == 2)
->>>>>>> Stashed changes
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     Retire
                                 </button>
@@ -264,30 +252,18 @@
                     <div class="head">Current Status</div>
                         <div class="progress-bars">
                             
-<<<<<<< Updated upstream
                             @if ($docDetail->stage >= 1)
-=======
-                            @if ($employee->stage >= 1)
->>>>>>> Stashed changes
                             <div class="active">Opened</div>
                         @else
                             <div class="">Opened</div>
                         @endif
 
-<<<<<<< Updated upstream
                         @if ($docDetail->stage >= 2)
-=======
-                        @if ($employee->stage >= 2)
->>>>>>> Stashed changes
                             <div class="active">Active </div>
                         @else
                             <div class="">Active </div>
                         @endif
-<<<<<<< Updated upstream
                         @if ($docDetail->stage >= 3)
-=======
-                        @if ($employee->stage >= 3)
->>>>>>> Stashed changes
                             <div class="active">Closed - Retired</div>
                         @else
                             <div class="">Closed - Retired</div>
@@ -305,11 +281,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
 
-<<<<<<< Updated upstream
             <form id="auditform" action="{{ route('employee_tms_update', $docDetail->id) }}" method="post" enctype="multipart/form-data">
-=======
-            <form id="auditform" action="{{ route('employee_tms_update', $employee->id) }}" method="post" enctype="multipart/form-data">
->>>>>>> Stashed changes
                 @csrf
                 <div id="step-form">
 
@@ -326,33 +298,21 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input readonly type="text" name="record_number"
-<<<<<<< Updated upstream
                                         value="{{ Helpers::getDivisionName($docDetail->division_id) }}/CAPA/{{ Helpers::year($docDetail->created_at) }}/{{ $docDetail->record }}">
-=======
-                                        value="{{ Helpers::getDivisionName($employee->division_id) }}/CAPA/{{ Helpers::year($employee->created_at) }}/{{ $employee->record }}">
->>>>>>> Stashed changes
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code </b></label>
                                         <input readonly type="text" name="division_code"
-<<<<<<< Updated upstream
                                         value="{{ Helpers::getDivisionName($docDetail->division_id) }}">
-=======
-                                        value="{{ Helpers::getDivisionName($employee->division_id) }}">
->>>>>>> Stashed changes
                                         {{-- <input type="hidden" name="division_id" value="{{ session()->get('division') }}"> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
-<<<<<<< Updated upstream
                                         <input readonly type="text" name="initiator" id="initiator" value="{{ $docDetail->initiator_name }}">
-=======
-                                        <input readonly type="text" name="initiator" id="initiator" value="{{ $employee->initiator }}">
->>>>>>> Stashed changes
 
                                     </div>
                                 </div>
@@ -370,14 +330,9 @@
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
-<<<<<<< Updated upstream
-                                            @foreach ($users as $employee)
-                                                <option value="{{ $employee->id }}">{{ $employee->name }}</option>
-=======
-                                            @foreach ($users as $value)
+                                            {{-- @foreach ($users as $value)
                                                 <option {{ $employee->assign_to == $employee->id ? 'selected' : '' }} value="{{ $employee->id }}" >{{ $employee->assign_to}}</option>
->>>>>>> Stashed changes
-                                            @endforeach
+                                            @endforeach --}}
                                         </select>
                                         {{-- <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="">Select</option>
@@ -419,11 +374,7 @@
                                     <div class="group-input">
                                         <label for="audit_type">Employee ID
                                             </label>
-<<<<<<< Updated upstream
                                       <input type="number" name="employee_ID" type="text" value="{{$docDetail->employee_ID}}">
-=======
-                                      <input type="number" name="employee_ID" type="text" value="{{$employee->employee_ID}}">
->>>>>>> Stashed changes
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -432,22 +383,12 @@
                                             </label>
                                      <select name="gender" id="gender">
                                         <option value="">Enter Your Selection Here</option>
-<<<<<<< Updated upstream
                                            {{-- <option value="recall" @if ($trainer->initiated_through == 'recall') selected @endif>Recall</option> --}}
                                                         {{-- <option value="return" @if ($trainer->initiated_through == 'return') selected @endif>Return</option> --}}
                        
 
                                         <option value="male" @if ($docDetail->gender == 'male') selected @endif>Male</option>
                                         <option value="female" @if ($docDetail->gender == 'female') selected @endif>Female</option>
-=======
-                                         <option @if ($employee->gender == 'Male') selected @endif
-                                                        value="Male">{{$employee->gender}}</option>
-
-                                        <option @if ($employee->gender == 'Female') selected @endif
-                                                        value="Female">{{$employee->gender}}</option>
-                                                        
-                                        {{-- <option value="{{ $employee->gender}}">Female</option> --}}
->>>>>>> Stashed changes
 
                                      </select>
                                     </div>
@@ -458,14 +399,9 @@
                                             </label>
                                      <select name="department_name" id="department_name">
                                         <option value="">Enter Your Selection Here</option>
-<<<<<<< Updated upstream
                                         <option  value="1" @if ($docDetail->department_name == '1') selected @endif>1</option>
                                         <option value="2" @if ($docDetail->department_name == '2') selected @endif>2</option>
                                         <option value="3" @if ($docDetail->department_name == '3') selected @endif>3</option>
-=======
-                                        <option value="{{ $employee->department_name}}">1</option>
-                                        <option value="{{ $employee->department_name}}">2</option>
->>>>>>> Stashed changes
 
                                      </select>
                                     </div>
@@ -476,13 +412,8 @@
                                             </label>
                                      <select name="job_title" id="job_title">
                                         <option value="">Enter Your Selection Here</option>
-<<<<<<< Updated upstream
                                         <option value="1" @if ($docDetail->job_title == '1') selected @endif>1</option>
                                         <option value="2" @if ($docDetail->job_title == '2') selected @endif>2</option>
-=======
-                                        <option value="{{ $employee->job_title}}">1</option>
-                                        <option value="{{ $employee->job_title}}">2</option>
->>>>>>> Stashed changes
 
                                      </select>
                                     </div>
@@ -508,17 +439,11 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-<<<<<<< Updated upstream
                                                 <input type="file" id="myfile" name="attached_cv[]"
                                                     oninput="addMultipleFiles(this, 'attached_cv')" value="{{$docDetail->attached_cv}}"  multiple>
                                             
                                            
                                                 </div>
-=======
-                                                <input type="file" id="myfile" name="attached_cv[]" value="{{$employee->attached_cv}}"
-                                                    oninput="addMultipleFiles(this, 'attached_cv')" multiple>
-                                            </div>
->>>>>>> Stashed changes
                                         </div>
 
                                     </div>

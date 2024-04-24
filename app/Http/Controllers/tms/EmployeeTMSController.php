@@ -21,14 +21,12 @@ class EmployeeTMSController extends Controller
     //     return view('frontend.tms.index', compact('empolyee'));
     // }
 
-<<<<<<< Updated upstream
-public function employeeShow($id){
-    $docDetail = EmployeeTMS::find($id);
-   return view('frontend.TMS.employee_tms_view', compact('docDetail'));
-=======
+
  public function employeeShow($id)
  {
-    $employee = EmployeeTMS::find($id);
+    $docDetail = EmployeeTMS::find($id);
+    return view('frontend.TMS.employee_tms_view', compact('docDetail'));
+
 
 
     // $data = EmployeeTMS::where('employee_id', $data->employee_ID)->first();
@@ -59,9 +57,8 @@ public function employeeShow($id){
     // /////////////////////////////////////////////////////////////////////////
 
     // return $employee;
-    return view('frontend.TMS.employee_tms_view', compact('employee'));
 
->>>>>>> Stashed changes
+
 }
 
     public function store(Request $request)
