@@ -33,6 +33,7 @@ use App\Http\Controllers\tms\QuestionController;
 use App\Http\Controllers\tms\QuizeController;
 use App\Http\Controllers\rcms\DeviationController;
 use App\Http\Controllers\nirvanaController;
+use App\Http\Controllers\tms\EmployeeTMSController;
 use App\Imports\DocumentsImport;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
@@ -291,6 +292,12 @@ Route::post('classroomdetails/stage/{id}', [nirvanaController::class, 'nirvana_s
 
 
 Route::view('employee_tms', 'frontend.TMS.employee_tms');
+Route::view('employee_tms_view', 'frontend.TMS.employee_tms_view');
+Route::get('employeeShow/{id}', [EmployeeTMSController::class, 'employeeShow'])->name('employeeShow');
+Route::post('employee_tms_create', [EmployeeTMSController::class, 'store'])->name('employee_tms_create');
+Route::post('employee_tms_update/{id}', [EmployeeTMSController::class, 'update'])->name('employee_tms_update');
+
+
 
 
 

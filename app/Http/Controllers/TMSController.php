@@ -13,6 +13,7 @@ use App\Models\Division;
 use App\Models\DocumentTraining;
 use App\Http\Controllers\Controller;
 use App\Models\DocumentHistory;
+use App\Models\EmployeeTMS;
 use App\Models\Question;
 use App\Models\Quize;
 use App\Models\RoleGroup;
@@ -116,7 +117,9 @@ class TMSController extends Controller
            }
             }
 
-            return view('frontend.TMS.dashboard', compact('documents2','documents','due','pending','complete'));
+            $employeeData = EmployeeTMS::get();
+
+            return view('frontend.TMS.dashboard', compact('employeeData', 'documents2','documents','due','pending','complete'));
         }
         else{
             $train = [];
@@ -151,7 +154,8 @@ class TMSController extends Controller
             }
            }
            $documents2 =$documents;
-           return view('frontend.TMS.dashboard',compact('documents','documents2'));
+           $employeeData = EmployeeTMS::get();
+           return view('frontend.TMS.dashboard',compact('employeeData', 'documents','documents2'));
 
         }
     }

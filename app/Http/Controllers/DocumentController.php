@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
+use Illuminate\Support\Facades\File;
 
 class DocumentController extends Controller
 {
@@ -1533,6 +1534,15 @@ class DocumentController extends Controller
 
             }
         }
+
+        $directoryPath = public_path("pdfs");
+        $filePath = $directoryPath . '/SOP' . $id . '.pdf';
+
+        if (!File::isDirectory($directoryPath)) {
+            File::makeDirectory($directoryPath, 0755, true, true); // Recursive creation with read/write permissions
+        }        
+
+        $pdf->save($filePath);
 
         return $pdf->stream('SOP'.$id.'.pdf');
     }
