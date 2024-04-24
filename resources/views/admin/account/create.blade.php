@@ -21,7 +21,7 @@
 
                 <div class="form-group">
                     <label for="name">Name <span style="color: red">*</span></label>
-                    <input type="name" name="name" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Enter User Name" required  autocomplete="off">
+                    <input type="name" name="name" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Enter User Name" required>
                     @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -41,7 +41,9 @@
                 <div class="form-group">
 
                     <label for="password">Password <span style="color: red">*</span></label>
-                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Enter password" required  autocomplete="new-password">
+                    <input type="text" name="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Enter password" id="txtPassword"  style=" #txtPassword{
+           -webkit-text-security:disc;
+       }" required autocomplete="off">
                     @error('password')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

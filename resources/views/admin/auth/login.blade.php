@@ -49,8 +49,10 @@
                     @enderror
                     <div class="input-group mb-3">
 
-                        <input type="password" name="password" value="admin" class="form-control"
-                            placeholder="Password">
+                        <input type="text" name="password" value="admin" class="form-control"
+                            placeholder="Password" id="txtPassword"  style=" #txtPassword{
+           -webkit-text-security:disc;
+       }" autocomplete="off">
 
                         <div class="input-group-append">
                             <div class="input-group-text">

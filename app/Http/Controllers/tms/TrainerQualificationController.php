@@ -25,14 +25,21 @@ class TrainerQualificationController extends Controller
     public function store(Request $request)
     {
 
-        $validator = Validator::make($request->all(), [
-            'short_description' => 'required|string|max:255',
-        ]);
+
+
+        if (!$request->short_description) {
+            toastr()->error("Short description is required");
+            return redirect()->back();
+        }
+
+        // $validator = Validator::make($request->all(), [
+        //     'short_description' => 'required|string|max:255',
+        // ]);
         
   
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
+        // if ($validator->fails()) {
+        //     return redirect()->back()->withErrors($validator)->withInput();
+        // }
 
 
 
@@ -100,7 +107,10 @@ class TrainerQualificationController extends Controller
   
     public function update(Request $request, $id)
     {
-
+        if (!$request->short_description) {
+            toastr()->error("Short description is required");
+            return redirect()->back();
+        }
 
         $Trainer = TrainerQualification::find($id);
         $Trainer->division_id="7";
