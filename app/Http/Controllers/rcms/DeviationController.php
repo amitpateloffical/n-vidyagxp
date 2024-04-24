@@ -2886,8 +2886,10 @@ class DeviationController extends Controller
 
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $deviation = Deviation::find($id);
+
             $updateCFT = DeviationCft::where('deviation_id', $id)->latest()->first();
             $lastDocument = Deviation::find($id);
+
             $cftDetails = DeviationCftsResponse::withoutTrashed()->where(['status' => 'In-progress', 'deviation_id' => $id])->distinct('cft_user_id')->count();
             
             if ($deviation->stage == 1) {
@@ -3005,6 +3007,8 @@ class DeviationController extends Controller
                 $deviation->HOD_Review_Complete_By = Auth::user()->name;
                 $deviation->HOD_Review_Complete_On = Carbon::now()->format('d-M-Y');
                 $deviation->HOD_Review_Comments = $request->comment;
+
+                
                 $history = new DeviationAuditTrail();
                 $history->deviation_id = $id;
                 $history->activity_type = 'Activity Log';

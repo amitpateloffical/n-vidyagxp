@@ -20,7 +20,7 @@
                 <div class="drop-list">
                     <a href="{{ route('TMS.create') }}">Create Training Plan</a>
                     <a href="{{ url('TMS/show') }}">Manage Training Plan</a>
-                    <a href="/trainer_qualification">Trainer Qualification</a>
+                    <a href="{{route('trainer_qualification')}}">Trainer Qualification</a>
 
                     <a href="classroom_training">Classroom Training</a>
 

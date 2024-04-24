@@ -320,6 +320,7 @@ $users = DB::table('users')
                         @php
                             $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                           // dd($userRoles);
                             $cftRolesAssignUsers = collect($userRoleIds); //->contains(fn ($roleId) => $roleId >= 22 && $roleId <= 33);
                             $cftUsers = DB::table('deviationcfts')->where(['deviation_id' => $data->id])->first();
 
@@ -940,11 +941,13 @@ wow = new WOW(
                                             // }
                                         @endphp
                                         <label for="If Other">Deviation Observed By<span class="text-danger">*</span></label>
+
                                         <select multiple name="Facility[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} placeholder="Select Facility Name" data-search="false" data-silent-initial-value-set="true" id="Facility">
                                             @foreach ($users as $user)
                                                 <option {{ (in_array($user->id, $selectedFacilities) || in_array($user->id, $inputFacilities))  ? 'selected' : '' }} value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach                                           
                                         </select>
+                                        
                                         @error('Facility')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
