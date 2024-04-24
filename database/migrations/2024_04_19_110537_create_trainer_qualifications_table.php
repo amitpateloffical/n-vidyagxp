@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('trainer_qualifications', function (Blueprint $table) {
             $table->id();
             $table->string('record_number')->nullable();
-            $table->string('division_code')->nullable();
+            $table->string('division_id')->nullable();
             $table->string('Initiator_id')->nullable();
             $table->date('intiation_date')->nullable();
             $table->string('assign_to')->nullable();
@@ -39,10 +39,17 @@ return new class extends Migration
             $table->text('trainingQualificationStatus')->nullable();
             $table->string('Q_comment')->nullable();
             $table->longtext('inv_attachment')->nullable();
-            $table->longtext('stage')->nullable();
+            $table->longtext('Stage')->nullable();
             $table->longtext('status')->nullable();
             $table->longtext('submit_by')->nullable();
             $table->longtext('submit_on')->nullable();
+            $table->longtext('rejected_by')->nullable();
+            $table->longtext('rejected_on')->nullable();
+            $table->longtext('submit_comment')->nullable();
+            $table->longtext('HOD_Review_Complete_By')->nullable();
+            $table->longtext('HOD_Review_Complete_On')->nullable();
+            $table->longtext('HOD_Review_Comments')->nullable();
+            
             $table->timestamps();
             $table->softDeletes();
 

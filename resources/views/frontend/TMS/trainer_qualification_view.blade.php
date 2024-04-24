@@ -284,7 +284,9 @@
                        
 
                             @php
-                            $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $trainer->division_id])->get();
+                            $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => 
+                            $trainer->division_id])->get();
+                            //dd($userRoles);
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                              @endphp
 
@@ -296,15 +298,15 @@
                                 Submit
                             </button>
                         @elseif($trainer->Stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#Reject">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 Reject
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#Qualified">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Qualified
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
-                            </button>
+                            </button> --}}
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button> --}}
@@ -312,6 +314,7 @@
                         @endif 
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                         </a> </button>
+
 
 
 
@@ -409,7 +412,7 @@
         </div>
     </div>
 
- <div class="modal fade" id="Reject">
+ <div class="modal fade" id="more-info-required-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
     
@@ -418,7 +421,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('trainer_send_stage', $trainer->id) }}" method="POST" id="signatureModalForm">
+                <form action="{{ route('trainer_reject', $trainer->id) }}" method="POST" id="signatureModalForm">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
