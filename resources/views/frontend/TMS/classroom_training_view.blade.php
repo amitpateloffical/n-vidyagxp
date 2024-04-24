@@ -294,37 +294,134 @@
                     <div class="main-head1">Record Workflow </div>
 
                     <div class="d-flex" style="gap:20px;">
-                       
-                        {{-- <button class="button_theme1" onclick="window.print();return false;"
-                            class="new-doc-btn">Print</button> --}}
-                         <button class="button_theme1"> <a class="text-white" href=""> {{-- add here url for auditTrail i.e. href="{{ url('CapaAuditTrial', $nirvana->id) }}" --}}
-                                Audit Trail </a> </button>
+                        @php
+                            $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $nirvana->division_id])->get();
+                            
+                            $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                                            
+                            // Define the column names
+                            $columns = ['Production_person', 'Warehouse_notification', 'Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person'];
 
-                       
+                            $valuesArray = [];
+                        @endphp
+
+    {{-- <button class="button_theme1" onclick="window.print();return false;" class="new-doc-btn">Print</button> --}}
+    <!-- <button class="button_theme1"> <a class="text-white" href=""> {{-- add here url for auditTrail i.e. href="{{ url('CapaAuditTrial', $nirvana->id) }}" --}}
+        Audit Trail </a> </button> -->
+
+    <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal"> 
+        Submit
+    </button>
+    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+        Cancel
+    </button>
+    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+        More Info Required
+    </button> --}} -->
+
+                        @if ($nirvana->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                                More Info Required
-                            </button> --}}
-                          
-                            
-                              
-                           
-                            
+                        @elseif($nirvana->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Approved
+                            Close Registration
                             </button>
-                        <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
-                            </a> </button>
-
-
-                    </div>
+                           
+                        @elseif($nirvana->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                               <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                               Registration Approved
+                            </button>
+                          
+                        @elseif($nirvana->stage == 4 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds) || in_array(Auth::user()->id, $valuesArray)))
+                        
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Class Completed
+                            </button>
+                              
+                            
+                        @elseif($nirvana->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Send to Initiator
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
+                                Send to HOD
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
+                                Send to QA Initial Review
+                            </button>
+                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                QA Final Review Complete
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
+                            </button>
+                     
+                        @endif 
+     <button class="button_theme1"> <a class="text-white" href="{{ url('TMS') }}"> Exit </a> </button>
+   
+        </div>
 
                 </div>
+                <div class="modal fade" id="signature-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+    
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="{{ route('nirvana_send_stage', $nirvana->id) }}" method="POST" id="signatureModalForm">
+                    @csrf
+                    <!-- Modal body --> 
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input type="comment" name="comment">
+                        </div>
+                    </div>
+    
+                    <!-- Modal footer -->
+                    <!-- <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button>Close</button>
+                    </div> -->
+                    <div class="modal-footer">
+                        <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
+                        <button type="button" data-bs-dismiss="modal" id = "signatureModalForm">Close</button>
+                    </div>
+                </form>
+            </div>
+
+            
+        </div>
+    </div>
+
+
+  
+
                 <div class="status">
                     <div class="head">Current Status</div>
                  
@@ -334,38 +431,38 @@
                   
                         <div class="progress-bars">
                             
-                            {{-- @if ($nirvana->stage >= 1) --}}
+                            @if ($nirvana->stage >= 1)
                             <div class="active">Opened</div>
-                        {{-- @else --}}
-                            {{-- <div class="">Opened</div> --}}
-                        {{-- @endif --}}
+                       @else
+                             <div class="">Opened</div> 
+                         @endif
 
-                        {{-- @if ($nirvana->stage >= 2) --}}
-                            {{-- <div class="active">Available For Registration </div> --}}
-                        {{-- @else --}}
+                         @if ($nirvana->stage >= 2) 
+                            <div class="active">Available For Registration </div>
+                       @else
                             <div class="">Available For Registration</div>
-                        {{-- @endif --}}
+                      @endif 
 
-                        {{-- @if ($nirvana->stage >= 3) --}}
-                            {{-- <div class="active">Pending Registration
-                                Approval</div> --}}
-                        {{-- @else --}}
+                      @if ($nirvana->stage >= 3) 
+                           <div class="active">Pending Registration
+                                Approval</div>
+                         @else 
                             <div class="">Pending Registration
                                 Approval</div>
-                        {{-- @endif --}}
+                        @endif 
 
-                        {{-- @if ($nirvana->stage >= 4) --}}
-                            {{-- <div class="active">Awaiting Class</div> --}}
-                        {{-- @else --}}
+                       @if ($nirvana->stage >= 4) 
+                           <div class="active">Awaiting Class</div> 
+                         @else 
                             <div class="">Awaiting Class</div>
-                        {{-- @endif --}}
+                       @endif 
 
 
-                        {{-- @if ($nirvana->stage >= 5) --}}
-                            {{-- <div class="active">Closed - Completed</div> --}}
-                        {{-- @else --}}
+                        @if ($nirvana->stage >= 5) 
+                             <div class="active">Closed - Completed</div> 
+                         @else 
                             <div class="">Closed - Completed</div>
-                        {{-- @endif --}}
+                     @endif
                      
 
                 </div>
@@ -933,7 +1030,85 @@
             }
         });
     </script>
+<script>
+    console.log('Script working')
 
+    $(document).ready(function() {
+        
+            
+        function submitForm() {
+
+            let auditForm = document.getElementById('auditForm');
+
+
+            console.log('sumitting form')
+            
+            document.querySelectorAll('.saveAuditFormBtn').forEach(function(button) {
+                button.disabled = true;
+            })
+
+            document.querySelectorAll('.auditFormSpinner').forEach(function(spinner) {
+                spinner.style.display = 'flex';
+            })
+
+            auditForm.submit();
+        }
+
+        $('#ChangesaveButton01').click(function() {
+            document.getElementById('formNameField').value = 'general-open';
+            submitForm();
+        });
+        
+        $('#ChangesaveButton02').click(function() {
+            document.getElementById('formNameField').value = 'hod';
+            submitForm();
+        });
+
+        $('#ChangesaveButton03').click(function() {
+            document.getElementById('formNameField').value = 'qa';
+            submitForm();
+        });
+        
+        $('#ChangesaveButton04').click(function() {
+            document.getElementById('formNameField').value = 'capa';
+            submitForm();
+        });
+        
+        $('#ChangesaveButton05').click(function() {
+            document.getElementById('formNameField').value = 'qa-final';
+            submitForm();
+        });
+        
+        $('#ChangesaveButton06').click(function() {
+            document.getElementById('formNameField').value = 'qah';
+            submitForm();
+        });
+
+        $('#signatureModalButton').click(function() {
+
+        });
+        
+        
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var signatureForm = document.getElementById('signatureModalForm');
+
+        signatureForm.addEventListener('submit', function (e) {
+
+            var submitButton = signatureForm.querySelector('.signatureModalButton');
+            var spinner = signatureForm.querySelector('.signatureModalSpinner');
+
+            submitButton.disabled = true;
+
+            spinner.style.display = 'inline-block';
+        });
+    });
+
+
+// =========================
+
+</script>
 
     <script>
         VirtualSelect.init({

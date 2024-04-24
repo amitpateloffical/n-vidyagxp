@@ -25,6 +25,14 @@
                     <a href="classroom_training">Classroom Training</a>
 
                 </div>
+                
             </div>
+            {{-- <div class="tms-drop-block">
+                <div class="create">
+                    <a href="{{ url('rcms/form-division') }}"> <button style="margin-top: -5px;" class="button_theme1">
+                          New Document</button> </a>
+                </div>  
+            </div> --}}
+
         </div>
     </div>

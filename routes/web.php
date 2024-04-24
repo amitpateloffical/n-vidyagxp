@@ -35,6 +35,7 @@ use App\Http\Controllers\tms\TrainerQualificationController;
 
 use App\Http\Controllers\rcms\DeviationController;
 use App\Http\Controllers\nirvanaController;
+use App\Http\Controllers\tms\EmployeeTMSController;
 use App\Imports\DocumentsImport;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
@@ -282,6 +283,7 @@ Route::post('/nirvanastore', [nirvanaController::class, 'store'])->name('nirvana
 Route::post('nirvanaupdate/{id}', [nirvanaController::class, 'update'])->name('nirvanaupdate');
 
 Route::get('classroomdetails/{id}', [nirvanaController::class, 'classroomdetails'])->name('classroomdetails');
+Route::post('classroomdetails/stage/{id}', [nirvanaController::class, 'nirvana_send_stage'])->name('nirvana_send_stage');
 
 
 
@@ -296,6 +298,12 @@ Route::get('classroomdetails/{id}', [nirvanaController::class, 'classroomdetails
 
 
 Route::view('employee_tms', 'frontend.TMS.employee_tms');
+Route::view('employee_tms_view', 'frontend.TMS.employee_tms_view');
+Route::get('employeeShow/{id}', [EmployeeTMSController::class, 'employeeShow'])->name('employeeShow');
+Route::post('employee_tms_create', [EmployeeTMSController::class, 'store'])->name('employee_tms_create');
+Route::post('employee_tms_update/{id}', [EmployeeTMSController::class, 'update'])->name('employee_tms_update');
+
+
 
 
 
