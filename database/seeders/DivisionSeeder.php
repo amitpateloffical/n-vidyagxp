@@ -157,74 +157,74 @@ class DivisionSeeder extends Seeder
         $division = new QMSDivision();
         $division->id = 1;
         $division->name = "KSA";
-        $division->status = 0;
+        $division->status = 1;
         $division->save();
 
         $division = new QMSDivision();
         $division->id = 2;
         $division->name = "Egypt";
-        $division->status = 0;
+        $division->status = 1;  
         $division->save();
 
         $division = new QMSDivision();
         $division->id = 3;
         $division->name = "Estonia";
-        $division->status = 0;
+        $division->status = 1;
         $division->save();
 
         $division = new QMSDivision();
         $division->id = 4;
         $division->name = "EHS - North America";
-        $division->status = 0;
+        $division->status = 1;
         $division->save();
 
         $division = new QMSDivision();
         $division->id = 5;
         $division->name = "Global";
-        $division->status = 0;
+        $division->status = 1;
         $division->save();
 
         $division = new QMSDivision();
         $division->id = 6;
         $division->name = "Jordan";
-        $division->status = 0;
+        $division->status = 1;
         $division->save();
 
         $division = new QMSDivision();
         $division->id = 7;
         $division->name = "Dewas/India";
-        $division->status = 0;
+        $division->status = 1;
         $division->save();
 
         $division = new QMSDivision();
         $division->id = 8;
         $division->name = "Corporate/India";
-        $division->status = 0;
+        $division->status = 1;
         $division->save();
 
 
         $division = new QMSDivision();
         $division->id = 9;
         $division->name = "India";
-        $division->status = 0;
+        $division->status = 1;
         $division->save();
 
         $division = new QMSDivision();
         $division->id = 10;
         $division->name = "QMS - Asia";
-        $division->status = 0;
+        $division->status = 1;
         $division->save();
 
         $division = new QMSDivision();
         $division->id = 11;
         $division->name = "QMS - EMEA";
-        $division->status = 0;
+        $division->status = 1;
         $division->save();
 
         $division = new QMSDivision();
         $division->id = 12;
         $division->name = "SQM - APAC";
-        $division->status = 0;
+        $division->status = 1;
         $division->save();
 
         $division = new QMSDivision();
